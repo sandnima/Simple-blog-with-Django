@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>{{ object.title }}</h1>
+    <p>{{ object.content }}</p>
+    <p>Status: {% if object.active %} <span class="active">Active</span> {% endif %}</p>
+
+    <span><a href="{{ object.get_absolute_url }}update">Edit</a></span>
+    <span> / </span>
+    <span><a href="{{ object.get_absolute_url }}delete">Delete</a></span>
+{% endblock %}

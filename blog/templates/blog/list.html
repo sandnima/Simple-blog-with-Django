@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Articles list:</h3>
+    <ol>
+        {% for object in object_list %}
+            {% if object.active %}
+                <li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ol>
+{% endblock %}
