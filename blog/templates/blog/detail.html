@@ -3,6 +3,7 @@
 {% block content %}
 
     <h1>{{ object.title }}</h1>
+    <img class="banner" src="{{ object.image.url }}" alt="{{ object.title }}">
     <p>{{ object.content }}</p>
     <p>Status: {% if object.active %} <span class="active">Active</span> {% endif %}</p>
 
