@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <p>{{ user }}</p>
     <h3>Articles list:</h3>
     <ol>
         {% for object in object_list %}
-            {% if object.active %}
-                <li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>
+            {% if user.is_anonymous %}
+                {% if object.active %}
+                    <li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>
+                {% endif %}
+            {% else %}
+                <li>
+                    <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+                    {% if object.active %}
+                        <span class="active">Active</span>
+                    {% else %}
+                        <span class="inactive">Inactive</span>
+                    {% endif %}
+                </li>
             {% endif %}
         {% endfor %}
     </ol>
