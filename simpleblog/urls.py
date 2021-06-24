@@ -1,4 +1,4 @@
-"""SimpleBlog URL Configuration
+"""simpleblog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
@@ -22,7 +22,7 @@ from django.conf import settings
 from .views import AboutView, IndexView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('blog/', include('blog.urls')),
     path('', IndexView.as_view(), name='index'),
     path('about/', AboutView.as_view(), name='about'),
