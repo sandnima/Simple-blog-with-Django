@@ -3,7 +3,7 @@
 {% url 'about' as path_to_about %}
 {% url 'blog:list' as path_to_blog_list %}
 {% url 'blog:create' as path_to_blog_create %}
-{% url 'accounts:my-profile' as path_to_my_profile %}
+{% url 'profiles:my-profile' as path_to_my_profile %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -38,17 +38,3 @@
         </div>
     </div>
 </nav>
-<!---
-<nav>
-    <div>
-        <h2><a href="/">MyBlog:</a></h2>
-        <ul id="navbar">
-            <li><a href="/">Home</a> | </li>
-            <li><a href="/about">About</a> | </li>
-            <li><a href="/blog">Blog</a> | </li>
-            <li><a href="/blog/create">Creat New Blog</a></li>
-            <li class="admin"><a href="/admin">Admin area</a></li>
-        </ul>
-    </div>
-</nav>
--->
