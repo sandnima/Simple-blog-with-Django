@@ -1,4 +1,4 @@
-#!c:\users\nima\documents\django course\python-django-web-framework\venv\scripts\python.exe
+#!C:\Users\NimA\Documents\Django Course\simpleBlog\venv\Scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
