@@ -6,7 +6,7 @@
 
 {% block content %}
     <h1>{{ object.title }}</h1>
-    <img class="banner" src="{{ object.image.url }}" alt="{{ object.title }}">
+    <img class="banner" src="{{ object.image.url }}" alt="{{ object.title }}" style="height: 50vh;">
     <p>{{ object.content|linebreaks }}</p>
     {% if not user.is_anonymous %}
         <p>Status: {% if object.published %} <span class="active">Published</span> {% else %} <span class="inactive">Not published</span> {% endif %}</p>

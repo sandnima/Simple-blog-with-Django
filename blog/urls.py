@@ -11,10 +11,10 @@ from .views import (
 app_name = 'blog'
 urlpatterns = [
     path('', ArticleListView.as_view(), name='list'),
-    path('<int:id>/', ArticleDetailView.as_view(), name='detail'),
     path('create/', ArticleCreateView.as_view(), name='create'),
-    path('<int:id>/update/', ArticleUpdateView.as_view(), name='update'),
-    path('<int:id>/delete/', ArticleDeleteView.as_view(), name='delete'),
+    path('<pk>/', ArticleDetailView.as_view(), name='detail'),
+    path('<pk>/update/', ArticleUpdateView.as_view(), name='update'),
+    path('<pk>/delete/', ArticleDeleteView.as_view(), name='delete'),
 ]
 
 

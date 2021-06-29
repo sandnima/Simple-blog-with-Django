@@ -6,7 +6,7 @@ from profiles.models import Profile
 
 class Meta(models.Model):
     title_tag = models.CharField(max_length=60)
-    description_tag = models.CharField(max_length=160)
+    description_tag = models.TextField(max_length=160)
     
     def __str__(self):
         return f'{self.title_tag}'
@@ -28,7 +28,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def absolute_url(self):
-        return reverse("blog:detail", kwargs={"id": self.id})
+        return reverse("blog:detail", kwargs={"pk": self.pk})
     
     def __str__(self):
         return f'{self.title}'
