@@ -1,5 +1,28 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block scripts %}
+{% endblock %}
+
+{% block title %}
+{% endblock %}
 
 {% block content %}
-<h2>This is Index page</h2>
+    <div class="row g-4">
+    {% for object in object_list %}
+        <div class="
+        {% if forloop.counter == 1 %} col-12
+        {% elif forloop.counter == 2 %} col-12 col-sm-6
+        {% else %} col-12 col-sm-auto
+        {% endif %} ">
+            <div class="card text-white" style="height: 75vh;">
+                <img src="{{ object.image.url }}" class="card-img" alt="{{ object.title }}">
+                <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-5">
+                    <h5 class="card-title">{{ object.title }}</h5>
+                    <p class="card-text">{{ object.content|slice:"160" }}</p>
+                    <p class="card-text">{{ object.updated_at }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}

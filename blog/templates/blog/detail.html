@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block title %}
+    {{ object.title }}
+{% endblock %}
 
+{% block content %}
     <h1>{{ object.title }}</h1>
     <img class="banner" src="{{ object.image.url }}" alt="{{ object.title }}">
     <p>{{ object.content|linebreaks }}</p>
     {% if not user.is_anonymous %}
-        <p>Status: {% if object.active %} <span class="active">Active</span> {% else %} <span class="inactive">Inactive</span> {% endif %}</p>
+        <p>Status: {% if object.published %} <span class="active">Published</span> {% else %} <span class="inactive">Not published</span> {% endif %}</p>
     {% endif %}
 
     <span><a href="{{ object.get_absolute_url }}update">Edit</a></span>

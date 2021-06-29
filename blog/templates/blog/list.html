@@ -1,23 +1,46 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{% endblock title %}
 
 {% block content %}
-    <h3>Articles list:</h3>
-    <ol>
+    <div class="row g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for object in object_list %}
-            {% if user.is_anonymous %}
-                {% if object.active %}
-                    <li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>
-                {% endif %}
-            {% else %}
-                <li>
-                    <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
-                    {% if object.active %}
-                        <span class="active">Active</span>
-                    {% else %}
-                        <span class="inactive">Inactive</span>
-                    {% endif %}
-                </li>
-            {% endif %}
+          <div class="col">
+            <div class="card">
+              <img src="{{ object.image.url }}" class="card-img-top" alt="{{ object.title }}" style="height: 10rem;">
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{ object.absolute_url }}" class="text-decoration-none">{{ object.title }}</a></h5>
+                <p class="card-text">{{ object.headline }} <a href="{{ object.absolute_url }}" class="text-decoration-none">...</a></p>
+              </div>
+            </div>
+          </div>
         {% endfor %}
-    </ol>
-{% endblock %}
+    </div>
+    </div>
+{% endblock content %}
+
+
+    <!--
+{#    <h3>Articles list:</h3>#}
+{#    <ol>#}
+{#        {% for object in object_list %}#}
+{#            {% if user.is_anonymous %}#}
+{#                {% if object.active %}#}
+{#                    <li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>#}
+{#                {% endif %}#}
+{#            {% else %}#}
+{#                <li>#}
+{#                    <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>#}
+{#                    {% if object.published %}#}
+{#                        <span class="active">Published</span>#}
+{#                    {% else %}#}
+{#                        <span class="inactive">Not published</span>#}
+{#                    {% endif %}#}
+{#                </li>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+{#    </ol>#}
+    -->

@@ -27,8 +27,12 @@ class Article(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
-    def get_absolute_url(self):
+    def absolute_url(self):
         return reverse("blog:detail", kwargs={"id": self.id})
     
     def __str__(self):
         return f'{self.title}'
+    
+    @property
+    def headline(self):
+        return self.content[:160]
