@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'profiles',
     # Third party apps
     'crispy_forms',
+    'imagekit',
 ]
 
 MIDDLEWARE = [

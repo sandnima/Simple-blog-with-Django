@@ -3,24 +3,58 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from profiles.models import Profile
 
+from imagekit.models import ProcessedImageField, ImageSpecField
+from imagekit.processors import ResizeToFit
+
 
 class Meta(models.Model):
-    title_tag = models.CharField(max_length=60)
-    description_tag = models.TextField(max_length=160)
+    title_tag = models.CharField(unique=True, max_length=60)
+    description_tag = models.TextField(unique=True, max_length=160)
     
     def __str__(self):
         return f'{self.title_tag}'
 
 
+class Category(models.Model):
+    name = models.CharField(unique=True, max_length=120)
+    description = models.TextField(blank=True)
+    
+    def __str__(self):
+        return f'{self.name}'
+
+
+def get_other_category():
+    return Category.objects.get_or_create(name='Other')[0]
+
+
 class Article(models.Model):
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True)
+    title = models.CharField(unique=True, max_length=255)
+    slug = models.SlugField(unique=True, max_length=255)
     meta = models.OneToOneField(
         Meta,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
+    category = models.ForeignKey(Category, on_delete=models.SET(get_other_category))
     content = models.TextField()
-    image = models.ImageField(upload_to='banners')
+    # image = models.ImageField(upload_to='banners')
+    image = ProcessedImageField(
+        upload_to='banners',
+        processors=[ResizeToFit(1024, 1024)],
+        format='JPEG',
+        options={'quality': 90}
+    )
+    medium_image = ImageSpecField(
+        source='image',
+        processors=[ResizeToFit(640, 640)],
+        format='JPEG',
+        options={'quality': 95}
+    )
+    small_image = ImageSpecField(
+        source='image',
+        processors=[ResizeToFit(320, 320)],
+        format='JPEG',
+        options={'quality': 95}
+    )
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     liked = models.ManyToManyField(User, blank=True)
     published = models.BooleanField(default=False)

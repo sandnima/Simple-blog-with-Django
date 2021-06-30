@@ -14,6 +14,7 @@ from django.urls import reverse
 class ArticleListView(ListView):
     model = Article
     template_name = 'blog/list.html'
+    # queryset = Article.objects.all()
 
 
 class ArticleDetailView(DetailView):

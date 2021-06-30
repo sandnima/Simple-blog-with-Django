@@ -39,6 +39,7 @@ ipython_config.py
 
 # Environments
 /venv/
+.idea
 
 # Media and Static directories
 /media/
