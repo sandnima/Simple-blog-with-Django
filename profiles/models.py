@@ -3,6 +3,10 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 
+def get_guest_user():
+    pass
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=160, blank=True, null=True)

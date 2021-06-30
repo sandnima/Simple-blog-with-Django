@@ -40,6 +40,10 @@ def get_other_category():
     return Category.objects.get_or_create(name='Other')[0]
 
 
+def get_guest_profile():
+    pass
+
+
 def get_default_language():
     return Language.objects.get_or_create(name='fa')[0]
 
