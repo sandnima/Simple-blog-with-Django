@@ -37,16 +37,25 @@ docs/_build/
 profile_default/
 ipython_config.py
 
-# Environments
-/venv/
-.idea
+# idea
+.idea/
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
 
 # Media and Static directories
-/media/
-!/media/.gitkeep
-
-/static/
-!/static/.gitkeep
+media/*.jpg
+media/CACHE
+#/media/
+#!/media/.gitkeep
+#
+# /static/
+#!/static/.gitkeep
 
 # Secrets
 secrets.json
