@@ -8,22 +8,73 @@
 
 {% block content %}
     <div class="row g-4">
-    {% for object in object_list %}
-        <a href="{{ object.absolute_url }}">
-            <div class=" {% if forloop.counter == 1 %} col-12
-            {% elif forloop.counter == 2 %} col-12 col-sm-6
-            {% else %} col-12 col-sm-auto
-            {% endif %} ">
-                <div dir="{% if object.lang.code in lang_list %}rtl{% endif %}" class="card text-white zoom round-more" style="height: 75vh;">
-                    <img src="{{ object.image.url }}" class="card-img" alt="{{ object.title }}">
-                    <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-5">
-                        <h5 class="card-title">{{ object.title }}</h5>
-                        <p class="card-text">{{ object.content|slice:"160" }}</p>
-                        <p class="card-text">{{ object.updated_at }}</p>
+        {% for object in object_list %}
+            {% if forloop.counter == 1 %}
+                <a href="{{ object.absolute_url }}"
+                   class="col-12">
+                    <div dir="auto"
+{#                         dir="{% if object.lang.code in lang_list %}rtl{% endif %}"#}
+                         class="card text-white zoom round-more"
+                         style="height: 35em;">
+                        <img src="{{ object.image.url }}"
+                             class="card-img"
+                             alt="{{ object.title }}">
+                        <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-5 p-sm-5">
+                            <h5 class="card-title fs-1">{{ object.title }}</h5>
+                            <p class="card-text fs-2">{{ object.headline }}...</p>
+                            <div dir="ltr" class="d-flex flex-column-reverse flex-sm-row fs-6">
+                                <div class="me-sm-3">
+                                    <img src="{{ object.author.avatar.url }}" alt="Avatar"
+                                         class="avatar me-1"
+                                         style="height: 2em;">
+                                    <span>{{ object.author|title }}</span>
+                                </div>
+                                <span class="fs-6 fw-lighter mb-3 mb-sm-0" style="opacity: 50%">
+                                    <i class="bi bi-calendar-date me-2"></i>{{ object.updated_at.date }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </a>
-    {% endfor %}
+                </a>
+            {% elif forloop.counter <= 3 %}
+                <a href="{{ object.absolute_url }}"
+                   class="col-12 col-sm-6">
+                    <div dir="auto"
+                         class="card text-white zoom round-more"
+                         style="height: 25em;">
+                        <img src="{{ object.image.url }}"
+                             class="card-img"
+                             alt="{{ object.title }}">
+                        <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-4">
+{#                            <h5 class="card-title fs-4">{{ object.title }}</h5>#}
+                            <p class="card-text fs-5">{{ object.headline }}...</p>
+                            <p dir="ltr"
+                               class="card-text fs-6 fw-lighter"
+                               style="opacity: 50%">
+                                <i class="bi bi-calendar-date me-2"></i>{{ object.updated_at.date }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% else %}
+                <a href="{{ object.absolute_url }}"
+                   class="col-12 col-sm-6 col-md-4">
+                    <div dir="auto"
+                         class="card text-white zoom round-more"
+                         style="height: 22em;">
+                        <img src="{{ object.image.url }}"
+                             class="card-img"
+                             alt="{{ object.title }}"/>
+                        <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-4">
+{#                            <h5 class="card-title fs-6 fw-bold">{{ object.title }}</h5>#}
+                            <p class="card-text fs-5">{{ object.headline }}...</p>
+                            <p dir="ltr"
+                               class="card-text fs-6 fw-lighter"
+                               style="opacity: 50%">
+                                <i class="bi bi-calendar-date me-2"></i>{{ object.updated_at.date }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

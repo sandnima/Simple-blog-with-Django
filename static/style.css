@@ -76,8 +76,11 @@ span a {
 }
 */
 
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+
 .card {
     overflow: hidden;
+    border: none;
 }
 
 .round-more.card {
@@ -89,10 +92,15 @@ span a {
 }
 
 .card-img, .card-img-top, .card-img-bottom {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
+    flex: auto;
 }
+
+.avatar {
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
 
 
 

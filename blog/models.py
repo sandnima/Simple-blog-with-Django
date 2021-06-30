@@ -49,6 +49,7 @@ class Article(models.Model):
     slug = models.SlugField(unique=True, max_length=255, allow_unicode=True)
     meta = models.OneToOneField(Meta, on_delete=models.PROTECT)
     category = models.ForeignKey(Category, on_delete=models.SET(get_other_category))
+    author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     content = models.TextField()
     lang = models.ForeignKey(Language, on_delete=models.SET(get_default_language), blank=True, null=True)
     image = ProcessedImageField(
@@ -69,7 +70,6 @@ class Article(models.Model):
         format='JPEG',
         options={'quality': 95}
     )
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     liked = models.ManyToManyField(User, blank=True)
     published = models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
@@ -77,7 +77,7 @@ class Article(models.Model):
 
     @property
     def headline(self):
-        return self.content[:160]
+        return self.content[:80]
     
     def __str__(self):
         return f'{self.title}'
