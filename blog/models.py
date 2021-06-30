@@ -29,14 +29,13 @@ def get_other_category():
 
 class Article(models.Model):
     title = models.CharField(unique=True, max_length=255)
-    slug = models.SlugField(unique=True, max_length=255)
+    slug = models.SlugField(unique=True, max_length=255, allow_unicode=True)
     meta = models.OneToOneField(
         Meta,
         on_delete=models.PROTECT,
     )
     category = models.ForeignKey(Category, on_delete=models.SET(get_other_category))
     content = models.TextField()
-    # image = models.ImageField(upload_to='banners')
     image = ProcessedImageField(
         upload_to='banners',
         processors=[ResizeToFit(1024, 1024)],
