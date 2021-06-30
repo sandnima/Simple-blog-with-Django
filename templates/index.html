@@ -9,20 +9,21 @@
 {% block content %}
     <div class="row g-4">
     {% for object in object_list %}
-        <div class="
-        {% if forloop.counter == 1 %} col-12
-        {% elif forloop.counter == 2 %} col-12 col-sm-6
-        {% else %} col-12 col-sm-auto
-        {% endif %} ">
-            <div dir="{% if object.lang.code in lang_list %}rtl{% endif %}" class="card text-white" style="height: 75vh;">
-                <img src="{{ object.image.url }}" class="card-img" alt="{{ object.title }}">
-                <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-5">
-                    <h5 class="card-title">{{ object.title }}</h5>
-                    <p class="card-text">{{ object.content|slice:"160" }}</p>
-                    <p class="card-text">{{ object.updated_at }}</p>
+        <a href="{{ object.absolute_url }}">
+            <div class=" {% if forloop.counter == 1 %} col-12
+            {% elif forloop.counter == 2 %} col-12 col-sm-6
+            {% else %} col-12 col-sm-auto
+            {% endif %} ">
+                <div dir="{% if object.lang.code in lang_list %}rtl{% endif %}" class="card text-white zoom round-more" style="height: 75vh;">
+                    <img src="{{ object.image.url }}" class="card-img" alt="{{ object.title }}">
+                    <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-5">
+                        <h5 class="card-title">{{ object.title }}</h5>
+                        <p class="card-text">{{ object.content|slice:"160" }}</p>
+                        <p class="card-text">{{ object.updated_at }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
     {% endfor %}
     </div>
 {% endblock %}
