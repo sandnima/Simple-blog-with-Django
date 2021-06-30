@@ -6,24 +6,25 @@
 
 {% block content %}
     <div class="row g-4">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
-        {% for object in object_list %}
-          <div class="col">
-            <div class="card">
-              <img src="{{ object.small_image.url }}" class="card-img-top" alt="{{ object.title }}" style="">
-              <div class="card-body">
-                <h5 class="card-title"><a href="{{ object.absolute_url }}" class="text-decoration-none">{{ object.title }}</a></h5>
-                <p class="card-text">{{ object.headline }}<a href="{{ object.absolute_url }}" class="text-decoration-none">...</a></p>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-    </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+            {% for object in object_list %}
+                <div class="col">
+                    <div class="card">
+                        <img src="{{ object.small_image.url }}" class="card-img-top" alt="{{ object.title }}" style="">
+                        <div dir="{% if object.lang.code in lang_list %}rtl{% endif %}" class="card-body">
+                            <h5 class="card-title"><a href="{{ object.absolute_url }}"
+                                                      class="text-decoration-none">{{ object.title }}</a></h5>
+                            <p class="card-text">{{ object.headline }}<a href="{{ object.absolute_url }}"
+                                                                         class="text-decoration-none">...</a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}
 
-
-    <!--
+<!--
 {#    <h3>Articles list:</h3>#}
 {#    <ol>#}
 {#        {% for object in object_list %}#}

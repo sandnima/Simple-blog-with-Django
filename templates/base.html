@@ -1,5 +1,8 @@
 {% load static %}
 <!DOCTYPE html>
+
+{% with "fa, un" as lang_list %}
+
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -44,3 +47,5 @@
     {% endblock js %}
 </body>
 </html>
+
+{% endwith %}

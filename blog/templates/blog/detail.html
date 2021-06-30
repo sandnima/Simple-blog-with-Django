@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ object.title }}</h1>
+    <h1 dir="{% if object.lang.code in lang_list %}rtl{% endif %}">{{ object.title }}</h1>
     <img class="banner" src="{{ object.image.url }}" alt="{{ object.title }}" style="height: 50vh;">
-    <p>{{ object.content|linebreaks }}</p>
+    <div dir="{% if object.lang.code in lang_list %}rtl{% endif %}">
+        <p>{{ object.content|linebreaks }}</p>
+    </div>
     {% if not user.is_anonymous %}
         <p>Status: {% if object.published %} <span class="active">Published</span> {% else %} <span class="inactive">Not published</span> {% endif %}</p>
     {% endif %}
@@ -15,4 +17,5 @@
     <span><a href="{{ object.get_absolute_url }}update">Edit</a></span>
     <span> / </span>
     <span><a href="{{ object.get_absolute_url }}delete">Delete</a></span>
+    <span> / Lang: {{ object.lang }} </span>
 {% endblock %}

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Third party apps
     'crispy_forms',
     'imagekit',
+    'langdetect',
 ]
 
 MIDDLEWARE = [
