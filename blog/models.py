@@ -7,6 +7,8 @@ from profiles.models import Profile
 from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFit
 from langdetect import detect
+from ckeditor.fields import RichTextField
+# from ckeditor_uploader.fields import RichTextUploadingField # Uncomment for Ckeditor upload image option
 
 
 class Meta(models.Model):
@@ -54,7 +56,9 @@ class Article(models.Model):
     meta = models.OneToOneField(Meta, on_delete=models.PROTECT)
     category = models.ForeignKey(Category, on_delete=models.SET(get_other_category))
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
-    content = models.TextField()
+    content = RichTextField()
+    # content = RichTextUploadingField() # Uncomment for Ckeditor upload image option
+    headline = models.TextField(max_length=160)
     lang = models.ForeignKey(Language, on_delete=models.SET(get_default_language), blank=True, null=True)
     image = ProcessedImageField(
         upload_to='banners',
@@ -78,10 +82,6 @@ class Article(models.Model):
     published = models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    @property
-    def headline(self):
-        return self.content[:80]
     
     def __str__(self):
         return f'{self.title}'

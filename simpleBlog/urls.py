@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include  # re_path # Uncomment for Ckeditor upload image option
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -23,6 +23,7 @@ from .views import AboutView, IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
+    # re_path(r'^ckeditor/', include('ckeditor_uploader.urls')), # Uncomment for Ckeditor upload image option
     path('', IndexView.as_view(), name='index'),
     path('about/', AboutView.as_view(), name='about'),
     path('blog/', include('blog.urls', namespace='blog')),

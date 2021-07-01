@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block scripts %}
-    <script src="{% static 'blog/editor.js' %}" defer></script>
 {% endblock scripts %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'blog/editor.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+{#    Editor aus#}
+{#    <link rel="stylesheet" href="{% static 'blog/editor/editor.css' %}">#}
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">#}
 {% endblock styles %}
 
 {% block content %}
@@ -17,24 +17,27 @@
 {#    </form>#}
 {#    #}
 
-    <div class="container-fluid">
-        <div class="row">
-            <h2 class="">Create new</h2>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 nopadding">
-                        <textarea id="txtEditor"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    Editor aus#}
+{#    <div class="container-fluid">#}
+{#        <div class="row">#}
+{#            <h2 class="">Create new</h2>#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-12 nopadding">#}
+{#                        <textarea id="txtEditor"></textarea>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}
 
 {% block js %}
-    <script>
-        $(document).ready(function() {
-            $("#txtEditor").Editor();
-        });
-    </script>
+{#    Editor aus#}
+{#    <script src="{% static 'blog/editor/editor.js' %}"></script>#}
+{#    <script>#}
+{#        $(document).ready(function() {#}
+{#            $("#txtEditor").Editor();#}
+{#        });#}
+{#    </script>#}
 {% endblock js %}
