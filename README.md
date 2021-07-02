@@ -1,5 +1,7 @@
 # Simple Blog By SandNima
 
+## Still working on... Features may be added by time...
+
 ## Quick start
 
 1. Clone project repo
