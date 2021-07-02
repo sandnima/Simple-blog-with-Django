@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Register" %}{% endblock %}
+
+{#{% block content %}#}
+{#<h1>{% trans "Sign Up" %}</h1>#}
+{##}
+{#<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>#}
+{##}
+{#<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">#}
+{#  {% csrf_token %}#}
+{#  {{ form.as_p }}#}
+{#  {% if redirect_field_value %}#}
+{#  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />#}
+{#  {% endif %}#}
+{#  <button type="submit">{% trans "Sign Up" %} &raquo;</button>#}
+{#</form>#}
+{#{% endblock %}#}
+
+
+
+
+{% block content %}
+    <div class="row justify-content-center px-1">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="login-form round-more bg-white mt-4 p-4">
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error|escape }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <form class="signup" id="signup_form" method="POST" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    <h1 class="mb-3">{% trans "Register" %}</h1>
+                    <p class="mb-4">{% blocktrans %}Already have an account? Then please <a class="text-decoration-none" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+                    <div class="form-floating mb-3">
+                        {{ form.email }}
+                        <label for="{{ form.email.id_for_label  }}">Email address</label>
+                        <div class="invalid-feedback">
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                    <small>{{ error|escape }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form.password1 }}
+                        <label for="{{ form.password1.id_for_label }}">Password</label>
+                        <div class="invalid-feedback">
+                            {% if form.password1.errors %}
+                                {% for error in form.password1.errors %}
+                                    {{ error|escape }}<br>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary btn-lg col-12">{% trans "Register" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_body %}
+    <script>
+        $(document).ready(function () {
+            $("body").addClass("bg-light");
+            $("#{{ form.email.id_for_label }}, #{{ form.password1.id_for_label }}").addClass("form-control");
+            if ({% if form.email.errors %}1{% else %}0{% endif %}) {
+                $("#{{ form.email.id_for_label }}").addClass("is-invalid");
+            }
+            if ({% if form.password1.errors %}1{% else %}0{% endif %}) {
+                $("#{{ form.password1.id_for_label }}").addClass("is-invalid");
+            }
+        });
+    </script>
+{% endblock extra_body %}
