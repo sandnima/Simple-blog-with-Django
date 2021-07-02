@@ -44,11 +44,15 @@ INSTALLED_APPS = [
     'crispy_forms',
     'imagekit',
     'langdetect',
-    'ckeditor',
-    # 'ckeditor_uploader', # Uncomment for Ckeditor upload image option
+    'ckeditor',  # 'ckeditor_uploader', # Uncomment for Ckeditor upload image option
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount'
 ]
 
 CKEDITOR_UPLOAD_PATH = 'contents/'
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
