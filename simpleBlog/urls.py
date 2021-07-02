@@ -8,7 +8,7 @@ from .views import AboutView, IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls'), name='accounts'),
     # re_path(r'^ckeditor/', include('ckeditor_uploader.urls')), # Uncomment for Ckeditor upload image option
     path('', IndexView.as_view(), name='index'),
     path('about/', AboutView.as_view(), name='about'),
