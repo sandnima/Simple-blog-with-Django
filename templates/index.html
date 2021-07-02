@@ -20,9 +20,9 @@
                         <img src="{{ object.image.url }}"
                              class="card-img"
                              alt="{{ object.title }}">
-                        <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-5 p-sm-5">
-                            <h5 class="card-title fs-1">{{ object.title }}</h5>
-                            <p class="card-text fs-2">{{ object.headline|slice:80 }}...</p>
+                        <div class="card-img-overlay overlay-dark d-flex flex-column justify-content-end p-4 p-sm-5">
+                            <h5 class="card-title fs-3 fs-sm-1">{{ object.title }}</h5>
+                            <p class="card-text fs-4 fs-sm-2">{{ object.headline|slice:80 }}...</p>
                             <div dir="ltr" class="d-flex flex-column-reverse flex-sm-row fs-6">
                                 <div class="me-sm-3">
                                     <img src="{{ object.author.avatar.url }}" alt="Avatar"
@@ -30,8 +30,8 @@
                                          style="height: 2em;">
                                     <span>{{ object.author|title }}</span>
                                 </div>
-                                <div>
-                                    <span class="fs-6 fw-lighter mb-3 mb-sm-0 avatar" style="opacity: 50%">
+                                <div class="mb-3 mb-sm-0">
+                                    <span class="fs-6 fw-lighter avatar" style="opacity: 50%">
                                         <i class="bi bi-calendar-date me-2"></i>{{ object.updated_at.date }}
                                     </span>
                                 </div>

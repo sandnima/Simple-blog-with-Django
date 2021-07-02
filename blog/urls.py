@@ -1,5 +1,4 @@
 from django.urls import path
-# from .views import list_view, detail_view
 from .views import (
     ArticleListView,
     ArticleDetailView,
@@ -16,11 +15,3 @@ urlpatterns = [
     path('<pk>/update/', ArticleUpdateView.as_view(), name='update'),
     path('<pk>/delete/', ArticleDeleteView.as_view(), name='delete'),
 ]
-
-
-'''
-urlpatterns = [
-    path('', list_view, name='list'),
-    path('<int:id>', detail_view, name='detail'),
-]
-'''

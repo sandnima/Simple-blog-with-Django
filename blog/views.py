@@ -27,11 +27,8 @@ class ArticleCreateView(CreateView):
     form_class = ArticleModelForm
     
     # success_url = '/'
-    def form_valid(self, form):
-        return super().form_valid(form)
-    
-    # def get_success_url(self):
-    #     return '/'
+    # def form_valid(self, form):
+    #     return super().form_valid(form)
 
 
 class ArticleUpdateView(UpdateView):
@@ -53,19 +50,3 @@ class ArticleDeleteView(DeleteView):
     
     def get_success_url(self):
         return reverse('blog:list')
-
-
-'''
-def list_view(request):
-    context = {
-        'objects': Article.objects.all()
-    }
-    return render(request, "blog/list.html", context)
-
-
-def detail_view(request, id):
-    context = {
-        'object': get_object_or_404(Article, id=id)
-    }
-    return render(request, "blog/detail.html", context)
-'''
