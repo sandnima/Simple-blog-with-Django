@@ -91,6 +91,8 @@
         let checkExist = setInterval(function() {
            if ($('span.cke_top').length) {
                $(".django-ckeditor-widget").addClass("w-100")
+               $("#cke_1_contents").css({"min-height": "400px"})
+
                $("span.cke_button__undo_icon").replaceWith('<i class="cke_button_icon bi bi-reply-fill fs-6"></i>')
                $("span.cke_button__redo_icon").replaceWith('<i class="cke_button_icon bi bi-reply-fill fs-6"' +
                    'style="transform: scaleX(-1); -webkit-transform: scaleX(-1);"></i>')

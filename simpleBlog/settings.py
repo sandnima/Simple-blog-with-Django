@@ -76,7 +76,20 @@ CKEDITOR_CONFIGS = {
         'toolbarCanCollapse': True,
         'tabSpaces': 4,
         'width': '100%',
-        'height': 520,
+        'extraPlugins': ','.join([
+            'wordcount',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
     }
 }
 
