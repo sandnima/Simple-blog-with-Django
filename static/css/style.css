@@ -1,0 +1,48 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+
+.card {
+    overflow: hidden;
+    border: none;
+}
+
+.round-more, .round-more.card {
+    border-radius: 1rem;
+}
+
+.round-more > .card-img{
+    border-radius: calc(1rem - 1px);
+}
+
+.card-img, .card-img-top, .card-img-bottom {
+    object-fit: cover;
+    flex: auto;
+}
+
+.avatar {
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.overlay-dark {
+    border-radius: calc(1rem - 1px);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.75) 100%);
+    background-image: linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.75) 100%);
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#bf000000', GradientType=0);
+}
+
+.zoom * {
+  transition: transform .2s; /* Animation */
+}
+
+.zoom:hover > img {
+  transform: scale(1.1);
+}

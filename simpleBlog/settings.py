@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-kkp(vq3qw5*76xtk14x)_fvy61^_*o!5k_hf612ce22p0_1*k8
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -51,8 +49,38 @@ INSTALLED_APPS = [
     'allauth.socialaccount'
 ]
 
+# Ckeditor configuration
 CKEDITOR_UPLOAD_PATH = 'contents/'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono-lisa',
+        'toolbar_myToolbar': [
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'clipboard', 'items': ['Undo', 'Redo']},
+            {'name': 'document',
+             'items': ['Source', 'Templates']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'BidiLtr', 'BidiRtl', 'Language'
+                       '-', 'NumberedList', 'BulletedList', 'Blockquote', 'Outdent', 'Indent']},
+            {'name': 'links', 'items': ['Link', 'Unlink']},
+            '/',
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'insert',
+             'items': ['Image', 'Table', 'HorizontalRule', 'PageBreak', 'Iframe']},
+            {'name': 'tools', 'items': ['ShowBlocks', 'Maximize']},
+        ],
+        'toolbar': 'myToolbar',
+        'toolbarCanCollapse': True,
+        'tabSpaces': 4,
+        'width': '100%',
+        'height': 520,
+    }
+}
 
+# Allauth configuration
 SITE_ID = 1
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
@@ -94,7 +122,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'simpleBlog.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -104,7 +131,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -124,7 +150,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -138,14 +163,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+# STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
-    BASE_DIR / 'assets',
+    BASE_DIR / 'static',
+    'assets',
 ]
 
 MEDIA_URL = '/media/'

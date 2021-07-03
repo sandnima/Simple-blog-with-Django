@@ -54,7 +54,7 @@ class Article(models.Model):
     title = models.CharField(unique=True, max_length=255)
     slug = models.SlugField(unique=True, max_length=255, allow_unicode=True)
     meta = models.OneToOneField(Meta, on_delete=models.PROTECT)
-    category = models.ForeignKey(Category, on_delete=models.SET(get_other_category))
+    category = models.ForeignKey(Category, default=get_other_category, on_delete=models.SET(get_other_category))
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     content = RichTextField()
     # content = RichTextUploadingField() # Uncomment for Ckeditor upload image option
