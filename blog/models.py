@@ -27,10 +27,25 @@ class Meta(models.Model):
         return f'{self.title_tag}'
 
 
-class Category(models.Model):
+class MainCategory(models.Model):
     name = models.CharField(unique=True, max_length=120)
     description = models.TextField(blank=True)
     
+    def __str__(self):
+        return f'{self.name}'
+
+
+def get_main_other_category():
+    main_other_category = MainCategory.objects.get_or_create(name='Other')[0]
+    return main_other_category
+
+
+class SubCategory(models.Model):
+    name = models.CharField(unique=True, max_length=120)
+    description = models.TextField(blank=True)
+    main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
+                                      on_delete=models.SET(get_main_other_category))
+
     def __str__(self):
         return f'{self.name}'
 
@@ -68,8 +83,9 @@ class Status(models.Model):
     ]
 
 
-def get_other_category():
-    return Category.objects.get_or_create(name='Other')[0]
+def get_sub_other_category():
+    sub_other_category = SubCategory.objects.get_or_create(name='Other')[0]
+    return sub_other_category
 
 
 def get_guest_profile():
@@ -88,7 +104,10 @@ class Article(models.Model):
     title = models.CharField(unique=True, max_length=255)
     slug = models.SlugField(unique=True, max_length=255, allow_unicode=True, blank=True)
     meta = models.OneToOneField(Meta, on_delete=models.PROTECT)
-    category = models.ForeignKey(Category, default=get_other_category, on_delete=models.SET(get_other_category))
+    main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
+                                      on_delete=models.SET(get_main_other_category))
+    sub_category = models.ForeignKey(SubCategory, default=get_sub_other_category,
+                                     on_delete=models.SET(get_sub_other_category))
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     content = RichTextField()
     # content = RichTextUploadingField() # Uncomment for Ckeditor upload image option
@@ -131,6 +150,3 @@ class Article(models.Model):
             code = detect(self.content)
             self.lang = Language.objects.get_or_create(code=code)[0]
         return super().save(*args, **kwargs)
-    
-    
-

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Meta, Category, Language, Tag, Status
+from .models import Article, Meta, MainCategory, SubCategory, Language, Tag, Status
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -14,7 +14,8 @@ class MetaAdmin(admin.ModelAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Meta, MetaAdmin)
-admin.site.register(Category)
+admin.site.register(MainCategory)
+admin.site.register(SubCategory)
 admin.site.register(Language)
 admin.site.register(Tag)
 

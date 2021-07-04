@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Count
 from django.views.generic import (
     CreateView,
@@ -14,7 +14,7 @@ from django.urls import reverse
 
 class ArticleListView(ListView):
     template_name = 'blog/list.html'
-    # paginate_by = 10
+    # paginate_by = 9
     queryset = Article.objects.all().filter(status='PUB').annotate(likes_count=Count('liked')).order_by('-updated_at')
 
 
@@ -23,13 +23,13 @@ class ArticleDetailView(DetailView):
     template_name = 'blog/detail.html'
 
 
-class ArticleCreateView(CreateView):
+def article_create_view(request):
     template_name = 'blog/create.html'
     form_class = ArticleModelForm
-    
-    # success_url = '/'
-    # def form_valid(self, form):
-    #     return super().form_valid(form)
+    context = {
+        'form': form_class
+    }
+    return render(request, 'blog/create.html', context)
 
 
 class ArticleUpdateView(UpdateView):
