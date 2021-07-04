@@ -14,7 +14,9 @@
    `python manage.py migrate`
 6. Create admin user  
    `python manage.py createsuperuser`
-7. Runserver and make your articles  
+7. Collect static files  
+   `python manage.py collectstatic`
+9. Runserver and make your articles  
    `python manage.py runserver`
    
 Feel free to use and create issues and make pull requests:)
