@@ -56,7 +56,7 @@ CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono-lisa',
         'toolbar_myToolbar': [
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'styles', 'items': ['Styles', 'Format', 'FontSize']},
             {'name': 'clipboard', 'items': ['Undo', 'Redo']},
             {'name': 'document',
              'items': ['Source', 'Templates']},

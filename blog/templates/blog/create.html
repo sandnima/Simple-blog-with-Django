@@ -7,40 +7,7 @@
 {% endblock scripts %}
 
 {% block styles %}
-    <style>
-    .cke_chrome {
-        border-radius: .3rem;
-        overflow: hidden;
-    }
-
-    .cke_top, .cke_bottom{
-        background-color: #f8f9fa !important;
-    }
-
-    .cke_top{
-        border-radius: .3rem .3rem 0 0;
-    }
-
-    .cke_bottom{
-        border-radius: 0 0 .3rem .3rem;
-    }
-
-    .cke_dialog {
-        border-radius: .3rem;
-        overflow: hidden;
-        background-color: #f8f9fa !important;
-    }
-
-    a.cke_dialog_ui_button_ok {
-        background-color: #0d6efd !important;
-        border-color: #0d6efd !important;
-    }
-
-    a.cke_button, .cke_panel, .cke_combo_button {
-        border-radius: 2px;
-    }
-
-    </style>
+    <link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">
 {#    Editor aus#}
 {#    <link rel="stylesheet" href="{% static 'blog/editor/editor.css' %}">#}
 {#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">#}
@@ -117,6 +84,11 @@
                $("span.cke_button__iframe_icon").replaceWith('<i class="cke_button_icon bi bi-file-earmark-play-fill fs-6"></i>')
                $("span.cke_button__showblocks_icon").replaceWith('<i class="cke_button_icon bi bi-grid-1x2-fill fs-6"></i>')
                $("span.cke_button__maximize_icon").replaceWith('<i class="cke_button_icon bi bi-fullscreen fs-6"></i>')
+
+               if ($('iframe.cke_wysiwyg_frame').length) {
+                   $('iframe.cke_wysiwyg_frame').contents().find('html head')
+                       .append('<link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">');
+               }
                clearInterval(checkExist);
            }
         }, 100); // check every 100ms
