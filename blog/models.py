@@ -11,6 +11,13 @@ from ckeditor.fields import RichTextField
 # from ckeditor_uploader.fields import RichTextUploadingField # Uncomment for Ckeditor upload image option
 
 
+class Tag(models.Model):
+    tag_name = models.CharField(unique=True, max_length=120)
+    
+    def __str__(self):
+        return f'{self.tag_name}'
+
+
 class Meta(models.Model):
     title_tag = models.CharField(unique=True, max_length=60)
     description_tag = models.TextField(unique=True, max_length=160)
@@ -28,7 +35,9 @@ class Category(models.Model):
 
 
 class Language(models.Model):
-    code = models.CharField(max_length=4, validators=[RegexValidator(regex='^.{2}$', message='Length has to be 2', code='nomatch')], unique=True)
+    code = models.CharField(max_length=4,
+                            validators=[RegexValidator(regex='^.{2}$', message='Length has to be 2', code='nomatch')],
+                            unique=True)
 
     def save(self, *args, **kwargs):
         self.code = self.code.lower()
@@ -36,6 +45,24 @@ class Language(models.Model):
     
     def __str__(self):
         return f'{self.code}'
+
+
+class Status(models.Model):
+    max_length = 3
+    DRAFT = 'DFT'
+    PENDING = 'PND'
+    EDITED = 'EDT'
+    PUBLISHED = 'PUB'
+    DENIED = 'DEN'
+    TRASH = 'TRS'
+    STATUS_CHOICES = [
+        (DRAFT, 'پیشنویس'),
+        (PENDING, 'در دست برسی'),
+        (EDITED, 'برسی مجدد'),
+        (PUBLISHED, 'منتشر شده'),
+        (DENIED, 'رد شده'),
+        (TRASH, 'زباله دان'),
+    ]
 
 
 def get_other_category():
@@ -48,6 +75,10 @@ def get_guest_profile():
 
 def get_default_language():
     return Language.objects.get_or_create(name='fa')[0]
+
+
+def get_default_status():
+    return Status.objects.get_or_create(state='پیشنویس')[0]
 
 
 class Article(models.Model):
@@ -78,8 +109,10 @@ class Article(models.Model):
         format='JPEG',
         options={'quality': 95}
     )
+    tags = models.ManyToManyField(Tag, blank=True)
     liked = models.ManyToManyField(User, blank=True)
-    published = models.BooleanField(default=False)
+    status = models.CharField(max_length=Status.max_length, choices=Status.STATUS_CHOICES,
+                              default=Status.DRAFT)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
