@@ -117,6 +117,7 @@ GitHub.sublime-settings
 # Media and Static directories
 media/CACHE
 media/*/*.jpg
+media/*/*.jpeg
 media/*/*.png
 !/media/*/.gitkeep
 
