@@ -91,6 +91,7 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath'
         ]),
+        "removePlugins": "exportpdf",
     }
 }
 
