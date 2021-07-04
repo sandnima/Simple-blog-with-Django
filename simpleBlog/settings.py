@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 # Ckeditor configuration
 CKEDITOR_UPLOAD_PATH = 'contents/'
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono-lisa',

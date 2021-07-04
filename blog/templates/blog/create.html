@@ -61,29 +61,10 @@
 {#                </div>#}
             </div>
             <div class="col-4">
-                <button type="submit" class="btn btn-primary mb-3">Confirm identity</button>
+                <button type="submit" class="btn col-6 btn-primary mb-3">Save</button>
             </div>
         </div>
     </form>
-{#    <form action="." method="POST", enctype="multipart/form-data"> {% csrf_token %}#}
-{#        {{ form.as_p }}#}
-{#        <input type="submit" value="Save">#}
-{#    </form>#}
-
-
-{#    Editor aus#}
-{#    <div class="container-fluid">#}
-{#        <div class="row">#}
-{#            <h2 class="">Create new</h2>#}
-{#            <div class="container">#}
-{#                <div class="row">#}
-{#                    <div class="col-lg-12 nopadding">#}
-{#                        <textarea id="txtEditor"></textarea>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
 {% endblock %}
 
 {% block extra_body %}
@@ -139,12 +120,5 @@
                clearInterval(checkExist);
            }
         }, 100); // check every 100ms
-        {#$(document).ready(function() {#}
-        {#    $("div.django-ckeditor-widget").ready(function() {#}
-        {#        $("div.cke_1").ready(function() {#}
-        {#            console.log($("div#cke_id_content"));#}
-        {#        });#}
-        {#    });#}
-        {#);#}
     </script>
 {% endblock %}
