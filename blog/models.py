@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from profiles.models import Profile
 
 from imagekit.models import ProcessedImageField, ImageSpecField
@@ -50,6 +51,7 @@ class Language(models.Model):
 class Status(models.Model):
     max_length = 3
     DRAFT = 'DFT'
+    REQUESTED = 'REQ'
     PENDING = 'PND'
     EDITED = 'EDT'
     PUBLISHED = 'PUB'
@@ -57,6 +59,7 @@ class Status(models.Model):
     TRASH = 'TRS'
     STATUS_CHOICES = [
         (DRAFT, 'پیشنویس'),
+        (REQUESTED, 'آماده انتشار'),
         (PENDING, 'در دست برسی'),
         (EDITED, 'برسی مجدد'),
         (PUBLISHED, 'منتشر شده'),
@@ -83,7 +86,7 @@ def get_default_status():
 
 class Article(models.Model):
     title = models.CharField(unique=True, max_length=255)
-    slug = models.SlugField(unique=True, max_length=255, allow_unicode=True)
+    slug = models.SlugField(unique=True, max_length=255, allow_unicode=True, blank=True)
     meta = models.OneToOneField(Meta, on_delete=models.PROTECT)
     category = models.ForeignKey(Category, default=get_other_category, on_delete=models.SET(get_other_category))
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
@@ -123,6 +126,7 @@ class Article(models.Model):
         return reverse("blog:detail", kwargs={"pk": self.pk})
     
     def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
         if self.lang is None:
             code = detect(self.content)
             self.lang = Language.objects.get_or_create(code=code)[0]
