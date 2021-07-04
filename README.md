@@ -2,6 +2,14 @@
 
 ## Still working on... Features may be added by time...
 
+## Feature
+✳️ “Recent Posts”  
+✳️ WYSIWYG Editor  
+🔜 Admin and User Management  
+🔜 Commenting System  
+🔜 Liking System  
+🔜 Sharing & Distribution  
+
 ## Quick start
 
 1. Clone project repo
