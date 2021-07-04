@@ -126,3 +126,6 @@ static/
 
 # Secrets
 secrets.json
+
+# Migrations
+*/migrations
