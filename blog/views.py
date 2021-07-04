@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
 from django.views.generic import (
     CreateView,
     DetailView,
@@ -12,9 +13,9 @@ from django.urls import reverse
 
 
 class ArticleListView(ListView):
-    model = Article
     template_name = 'blog/list.html'
-    # queryset = Article.objects.all()
+    # paginate_by = 10
+    queryset = Article.objects.all().filter(status='PUB').annotate(likes_count=Count('liked')).order_by('-updated_at')
 
 
 class ArticleDetailView(DetailView):
