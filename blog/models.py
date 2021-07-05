@@ -12,6 +12,10 @@ from ckeditor.fields import RichTextField
 # from ckeditor_uploader.fields import RichTextUploadingField # Uncomment for Ckeditor upload image option
 
 
+def get_guest_profile():
+    pass
+
+
 class Tag(models.Model):
     tag_name = models.CharField(unique=True, max_length=120)
     
@@ -19,12 +23,20 @@ class Tag(models.Model):
         return f'{self.tag_name}'
 
 
+def get_default_meta(title, description):
+    return Meta.objects.get_or_create(title_tag=title, description_tag=description)[0]
+    
+
 class Meta(models.Model):
     title_tag = models.CharField(unique=True, max_length=60)
     description_tag = models.TextField(unique=True, max_length=160)
     
     def __str__(self):
         return f'{self.title_tag}'
+
+
+def get_main_other_category():
+    return MainCategory.objects.get_or_create(name='Other')[0]
 
 
 class MainCategory(models.Model):
@@ -35,9 +47,8 @@ class MainCategory(models.Model):
         return f'{self.name}'
 
 
-def get_main_other_category():
-    main_other_category = MainCategory.objects.get_or_create(name='Other')[0]
-    return main_other_category
+def get_sub_other_category():
+    return SubCategory.objects.get_or_create(name='Other')[0]
 
 
 class SubCategory(models.Model):
@@ -48,6 +59,10 @@ class SubCategory(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+def get_default_language():
+    return Language.objects.get_or_create(name='fa')[0]
 
 
 class Language(models.Model):
@@ -83,31 +98,14 @@ class Status(models.Model):
     ]
 
 
-def get_sub_other_category():
-    sub_other_category = SubCategory.objects.get_or_create(name='Other')[0]
-    return sub_other_category
-
-
-def get_guest_profile():
-    pass
-
-
-def get_default_language():
-    return Language.objects.get_or_create(name='fa')[0]
-
-
-def get_default_status():
-    return Status.objects.get_or_create(state='پیشنویس')[0]
-
-
 class Article(models.Model):
     title = models.CharField(unique=True, max_length=255)
     slug = models.SlugField(unique=True, max_length=255, allow_unicode=True, blank=True)
-    meta = models.OneToOneField(Meta, on_delete=models.PROTECT)
+    meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
     main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
-                                      on_delete=models.SET(get_main_other_category))
+                                      on_delete=models.PROTECT)
     sub_category = models.ForeignKey(SubCategory, default=get_sub_other_category,
-                                     on_delete=models.SET(get_sub_other_category))
+                                     on_delete=models.PROTECT)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     content = RichTextField()
     # content = RichTextUploadingField() # Uncomment for Ckeditor upload image option
@@ -145,7 +143,10 @@ class Article(models.Model):
         return reverse("blog:detail", kwargs={"pk": self.pk})
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        if self.slug is None:
+            self.slug = slugify(self.title, allow_unicode=True)
+        if self.meta is None:
+            self.meta = get_default_meta(title=self.title, description=self.headline)
         if self.lang is None:
             code = detect(self.content)
             self.lang = Language.objects.get_or_create(code=code)[0]
