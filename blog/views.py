@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views.generic import (
     CreateView,
@@ -23,13 +24,14 @@ class ArticleDetailView(DetailView):
     template_name = 'blog/detail.html'
 
 
+@login_required
 def article_create_view(request):
     template_name = 'blog/create.html'
     form_class = ArticleModelForm
     context = {
         'form': form_class
     }
-    return render(request, 'blog/create.html', context)
+    return render(request, template_name, context)
 
 
 class ArticleUpdateView(UpdateView):
