@@ -140,7 +140,7 @@ class Article(models.Model):
         return f'{self.title}'
     
     def absolute_url(self):
-        return reverse("blog:detail", kwargs={"pk": self.pk})
+        return reverse("blog:detail", kwargs={"slug": self.slug})
     
     def save(self, *args, **kwargs):
         if self.slug is None:
