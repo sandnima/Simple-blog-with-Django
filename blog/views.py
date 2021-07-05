@@ -2,13 +2,18 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views.generic import (
-    CreateView,
     DetailView,
     ListView,
     UpdateView,
     DeleteView,
 )
-from .models import Article
+from .models import (
+    Article,
+    MainCategory,
+    SubCategory,
+    get_main_other_category,
+    get_sub_other_category
+)
 from .forms import ArticleModelForm
 from django.urls import reverse
 
@@ -28,8 +33,12 @@ class ArticleDetailView(DetailView):
 def article_create_view(request):
     template_name = 'blog/create.html'
     form_class = ArticleModelForm
+    get_main_other_category()
+    get_sub_other_category()
     context = {
-        'form': form_class
+        'form': form_class,
+        'main_category_options': MainCategory.objects.all(),
+        'sub_category_options': SubCategory.objects.all()
     }
     return render(request, template_name, context)
 

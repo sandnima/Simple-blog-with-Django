@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article, Meta
+from .models import Article, MainCategory, Meta
 from ckeditor.fields import RichTextFormField
 
 

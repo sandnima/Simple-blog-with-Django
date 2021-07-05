@@ -43,8 +43,8 @@ def get_main_other_category():
 class SubCategory(models.Model):
     name = models.CharField(unique=True, max_length=120)
     description = models.TextField(blank=True)
-    main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
-                                      on_delete=models.SET(get_main_other_category))
+    parent = models.ForeignKey(MainCategory, default=get_main_other_category,
+                               on_delete=models.SET(get_main_other_category))
 
     def __str__(self):
         return f'{self.name}'
