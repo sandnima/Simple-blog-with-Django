@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
+{% load mptt_tags %}
 
 {% block title %}Create{% endblock %}
 
@@ -14,7 +16,8 @@
 {% endblock styles %}
 
 {% block content %}
-    <form action="">
+    <form action="" method="POST">
+        {% csrf_token %}
         <div class="row">
             <div class="col-8">
                 <input class="form-control form-control-lg mb-3" type="text" placeholder="Title" aria-label="Title">
@@ -23,22 +26,43 @@
             </div>
             <div class="col-4">
                 <button type="submit" class="btn col-6 btn-primary mb-3">Save</button>
+                {#                {% for choice in form.categories %}#}
+                {#                    {{ choice }}#}
+                {#                {% endfor %}#}
+                {#                {{ form.categories }}#}
 
-                <input class="form-control mb-3" type="text" name="main_category" id="main_category_input"
-                       list="main_category_options" placeholder="Main Group">
-                <datalist id="main_category_options">
-                    {% for main_category in main_category_options %}
-                        <option>{{ main_category }}</option>
-                    {% endfor %}
-                </datalist>
+                {#                <input class="form-control mb-3" type="text" name="main_category" id="main_category_input"#}
+                {#                       list="main_category_options" placeholder="Main Group">#}
+                {#                <datalist id="main_category_options">#}
+                {#                    {% for main_category in main_category_options %}#}
+                {#                        <option>{{ main_category }}</option>#}
+                {#                    {% endfor %}#}
+                {#                </datalist>#}
+                {##}
+                {#                <input class="form-control mb-3" type="text" name="sub_category" id="sub_category_input"#}
+                {#                       list="sub_category_options" placeholder="Sub Group">#}
+                {#                <datalist id="sub_category_options">#}
+                {#                    {% for sub_category in sub_category_options %}#}
+                {#                        <option data-parent="{{ sub_category.parent }}" >{{ sub_category }}</option>#}
+                {#                    {% endfor %}#}
+                {#                </datalist>#}
 
-                <input class="form-control mb-3" type="text" name="sub_category" id="sub_category_input"
-                       list="sub_category_options" placeholder="Sub Group">
-                <datalist id="sub_category_options">
-                    {% for sub_category in sub_category_options %}
-                        <option data-parent="{{ sub_category.parent }}" >{{ sub_category }}</option>
-                    {% endfor %}
-                </datalist>
+                {% recursetree category %}
+                    <li class="nav-item dropdown">
+                        {% if not node.is_child_node %}
+                            <a class="nav-link" href="#">{% trans node.title %}</a>
+                        {% elif node.is_child_node %}
+                            <a class="nav-link dropdown-toggle" href="#"
+                               data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">{% trans node.parent.title %}</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                   href="#">{% trans node.title %}</a>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+
             </div>
         </div>
     </form>
@@ -108,13 +132,12 @@
 
     <!-- start DROPDOWN -->
     <script>
-        $("#main_category_input").focusout(function() {
+        $("#main_category_input").focusout(function () {
             let parent = $("#main_category_input").val();
-            $("#sub_category_options option").each(function(){
-                if ($(this).attr('data-parent') ==  parent) {
+            $("#sub_category_options option").each(function () {
+                if ($(this).attr('data-parent') == parent) {
                     $(this).attr('disabled', false)
-                }
-                else {
+                } else {
                     $(this).attr('disabled', true)
                 }
             })

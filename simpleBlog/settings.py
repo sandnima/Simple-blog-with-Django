@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount'
+    'allauth.socialaccount',
+    'mptt',
 ]
 
 # Ckeditor configuration
@@ -89,8 +90,10 @@ CKEDITOR_CONFIGS = {
             'clipboard',
             'dialog',
             'dialogui',
-            'elementspath'
+            'elementspath',
+            'bidi',
         ]),
+        'contentsLangDirection': 'rtl',
         "removePlugins": "exportpdf",
     }
 }

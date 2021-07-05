@@ -11,3 +11,4 @@ sqlparse==0.4.1
 
 langdetect~=1.0.9
 django-ckeditor~=6.1.0
+django-mptt~=0.12.0

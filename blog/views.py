@@ -9,12 +9,9 @@ from django.views.generic import (
 )
 from .models import (
     Article,
-    MainCategory,
-    SubCategory,
-    get_main_other_category,
-    get_sub_other_category
+    Category,
 )
-from .forms import ArticleModelForm
+from .forms import ArticleForm
 from django.urls import reverse
 
 
@@ -31,22 +28,23 @@ class ArticleDetailView(DetailView):
 
 @login_required
 def article_create_view(request):
+    form_class = ArticleForm()
+    category = Category.objects.all()
+    if request.method == "POST":
+        form_class = ArticleForm(request.POST)
     template_name = 'blog/create.html'
-    form_class = ArticleModelForm
-    get_main_other_category()
-    get_sub_other_category()
     context = {
         'form': form_class,
-        'main_category_options': MainCategory.objects.all(),
-        'sub_category_options': SubCategory.objects.all()
+        'category': category,
     }
+    print(form_class)
     return render(request, template_name, context)
 
 
 class ArticleUpdateView(UpdateView):
     model = Article
     template_name = 'blog/create.html'
-    form_class = ArticleModelForm
+    form_class = ArticleForm
     
     # success_url = '/'
     def form_valid(self, form):
