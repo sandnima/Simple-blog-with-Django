@@ -89,9 +89,11 @@ CKEDITOR_CONFIGS = {
             'clipboard',
             'dialog',
             'dialogui',
-            'elementspath'
+            'elementspath',
+            'bidi'
         ]),
-        "removePlugins": "exportpdf",
+        'contentsLangDirection': 'rtl',
+        'removePlugins': 'exportpdf',
     }
 }
 
