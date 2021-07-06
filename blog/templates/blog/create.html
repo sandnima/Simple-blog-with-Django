@@ -22,20 +22,17 @@
                 <button type="submit" class="btn col-6 btn-primary mb-3">Save</button>
 
                 <div class="mb-3">
-                    <label for="{{ form.headline.id }}" class="form-label">{{ form.headline.name|title }}</label>
+                    <label for="{{ form.headline.id_for_label }}" class="form-label">{{ form.headline.name|title }}</label>
                     {{ form.headline }}
                 </div>
-
-                <input class="form-control mb-3" type="text" name="main_category" id="main_category_input"
-                       list="main_category_options" placeholder="Main Group">
+                <label for="{{ form.main_category.id_for_label }}" class="form-label">Category</label>
+                {{ form.main_category }}
                 <datalist id="main_category_options">
                     {% for main_category in main_category_options %}
                         <option>{{ main_category }}</option>
                     {% endfor %}
                 </datalist>
-
-                <input class="form-control mb-3" type="text" name="sub_category" id="sub_category_input"
-                       list="sub_category_options" placeholder="Sub Group">
+                {{ form.sub_category }}
                 <datalist id="sub_category_options">
                     {% for sub_category in sub_category_options %}
                         <option data-parent="{{ sub_category.parent }}" >{{ sub_category }}</option>
@@ -110,8 +107,8 @@
 
     <!-- start DROPDOWN -->
     <script>
-        $("#main_category_input").focusout(function() {
-            let parent = $("#main_category_input").val();
+        $("#{{ form.main_category.id_for_label }}").focusout(function() {
+            let parent = $("#{{ form.main_category.id_for_label }}").val();
             $("#sub_category_options option").each(function(){
                 if ($(this).attr('data-parent') ==  parent) {
                     $(this).attr('disabled', false)
