@@ -4,10 +4,10 @@ from ckeditor.fields import RichTextFormField
 
 
 class ArticleModelForm(forms.Form):
-    title = forms.CharField(max_length=255)
-    content = RichTextFormField()
-    main_category = forms.CharField(max_length=120)
-    sub_category = forms.CharField(max_length=120)
+    title = forms.CharField(max_length=60)
+    content = RichTextFormField(max_length=2048)
+    main_category = forms.CharField(max_length=60)
+    sub_category = forms.CharField(max_length=60)
     
         
 class MetaModelForm(forms.ModelForm):
