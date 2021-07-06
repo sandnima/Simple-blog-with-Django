@@ -20,8 +20,8 @@ class ArticleModelForm(forms.Form):
         widget=forms.Textarea(
             attrs={
                 'class': 'form-control',
-                'style': 'height: 100px;'
-            }
+                'style': 'height: 100px;',
+            },
         ),
     )
     main_category = forms.CharField(max_length=60)
