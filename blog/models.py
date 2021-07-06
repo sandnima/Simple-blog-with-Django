@@ -99,8 +99,8 @@ class Status(models.Model):
 
 
 class Article(models.Model):
-    title = models.CharField(unique=True, max_length=255)
-    slug = models.SlugField(unique=True, max_length=255, allow_unicode=True, blank=True)
+    title = models.CharField(unique=True, max_length=60)
+    slug = models.SlugField(unique=True, max_length=60, allow_unicode=True, blank=True)
     meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
     main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
                                       on_delete=models.PROTECT)
