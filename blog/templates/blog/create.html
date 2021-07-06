@@ -14,13 +14,17 @@
     <form action="">
         <div class="row">
             <div class="col-8">
-{#                <input class="form-control form-control-lg mb-3" type="text" placeholder="Title" aria-label="Title">#}
                 {{ form.title }}
                 {{ form.media }}
                 {{ form.content }}
             </div>
             <div class="col-4">
                 <button type="submit" class="btn col-6 btn-primary mb-3">Save</button>
+
+                <div class="mb-3">
+                    <label for="{{ form.headline.id }}" class="form-label">{{ form.headline.name|title }}</label>
+                    {{ form.headline }}
+                </div>
 
                 <input class="form-control mb-3" type="text" name="main_category" id="main_category_input"
                        list="main_category_options" placeholder="Main Group">
@@ -37,11 +41,6 @@
                         <option data-parent="{{ sub_category.parent }}" >{{ sub_category }}</option>
                     {% endfor %}
                 </datalist>
-
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Comments</label>
-                </div>
             </div>
         </div>
     </form>

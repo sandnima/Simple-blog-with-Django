@@ -15,7 +15,15 @@ class ArticleModelForm(forms.Form):
         ),
     )
     content = RichTextFormField(max_length=2048)
-    headline = forms.CharField(widget=forms.Textarea, max_length=160)
+    headline = forms.CharField(
+        max_length=160,
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'style': 'height: 100px;'
+            }
+        ),
+    )
     main_category = forms.CharField(max_length=60)
     sub_category = forms.CharField(max_length=60)
     
