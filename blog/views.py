@@ -21,19 +21,13 @@ from django.urls import reverse
 def article_list(request, page=1):
     template_name = 'blog/list.html'
     articles = Article.objects.all().filter(status='PUB').annotate(likes_count=Count('liked')).order_by('-updated_at')
-    paginate_by = 1
+    paginate_by = 12
     pages = Paginator(articles, paginate_by)
     queryset = pages.page(page)
     context = {
         'object_list': queryset,
     }
     return render(request, template_name, context)
-
-
-# class ArticleListView(ListView):
-#     template_name = 'blog/list.html'
-#     # paginate_by = 9
-#     queryset = Article.objects.all().filter(status='PUB').annotate(likes_count=Count('liked')).order_by('-updated_at')
 
 
 class ArticleDetailView(DetailView):

@@ -7,15 +7,18 @@
 {% block content %}
     <!-- Articles List -->
     <div class="row g-4">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
             {% for object in object_list %}
                 <div class="col">
-                    <div class="card">
+                    <div class="card h-100">
                         <img src="{{ object.small_image.url }}" class="card-img-top" alt="{{ object.title }}" style="">
                         <div dir="{% if object.lang.code in lang_list %}rtl{% endif %}" class="card-body">
-                            <h5 class="card-title"><a href="{{ object.absolute_url }}"
-                                                      class="text-decoration-none">{{ object.title }}</a>
-                            </h5>
+                            <div class="card-title">
+                                <h5 class="lh-base overflow-hidden">
+                                    <a href="{{ object.absolute_url }}"
+                                       class="text-decoration-none">{{ object.title }}</a>
+                                </h5>
+                            </div>
                             <p class="card-text">
                                 {{ object.headline }}<a href="{{ object.absolute_url }}" class="text-decoration-none">...</a>
                             </p>
@@ -26,7 +29,7 @@
         </div>
     </div>
     <!-- Pagination nav -->
-    <nav aria-label="Page navigation example">
+    <nav class="mt-3" aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <li class="page-item {% if not object_list.has_previous %}disabled{% endif %}">
                 {% if object_list.has_previous %}

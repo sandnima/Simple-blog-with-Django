@@ -46,3 +46,10 @@
 .zoom:hover > img {
   transform: scale(1.1);
 }
+
+.card-title .overflow-hidden {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
