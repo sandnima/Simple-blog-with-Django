@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views.generic import (
     DetailView,
-    ListView,
     UpdateView,
     DeleteView,
 )
@@ -18,10 +18,22 @@ from .forms import ArticleModelForm
 from django.urls import reverse
 
 
-class ArticleListView(ListView):
+def article_list(request, page=1):
     template_name = 'blog/list.html'
-    # paginate_by = 9
-    queryset = Article.objects.all().filter(status='PUB').annotate(likes_count=Count('liked')).order_by('-updated_at')
+    articles = Article.objects.all().filter(status='PUB').annotate(likes_count=Count('liked')).order_by('-updated_at')
+    paginate_by = 1
+    pages = Paginator(articles, paginate_by)
+    queryset = pages.page(page)
+    context = {
+        'object_list': queryset,
+    }
+    return render(request, template_name, context)
+
+
+# class ArticleListView(ListView):
+#     template_name = 'blog/list.html'
+#     # paginate_by = 9
+#     queryset = Article.objects.all().filter(status='PUB').annotate(likes_count=Count('liked')).order_by('-updated_at')
 
 
 class ArticleDetailView(DetailView):

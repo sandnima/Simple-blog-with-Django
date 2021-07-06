@@ -5,6 +5,7 @@
 {% endblock title %}
 
 {% block content %}
+    <!-- Articles List -->
     <div class="row g-4">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
             {% for object in object_list %}
@@ -13,15 +14,37 @@
                         <img src="{{ object.small_image.url }}" class="card-img-top" alt="{{ object.title }}" style="">
                         <div dir="{% if object.lang.code in lang_list %}rtl{% endif %}" class="card-body">
                             <h5 class="card-title"><a href="{{ object.absolute_url }}"
-                                                      class="text-decoration-none">{{ object.title }}</a></h5>
-                            <p class="card-text">{{ object.headline }}<a href="{{ object.absolute_url }}"
-                                                                         class="text-decoration-none">...</a></p>
+                                                      class="text-decoration-none">{{ object.title }}</a>
+                            </h5>
+                            <p class="card-text">
+                                {{ object.headline }}<a href="{{ object.absolute_url }}" class="text-decoration-none">...</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
+    <!-- Pagination nav -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {% if not object_list.has_previous %}disabled{% endif %}">
+                {% if object_list.has_previous %}
+                    <a class="page-link" href="{% url 'blog:list' object_list.previous_page_number %}">Previous</a>
+                {% else %}
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                {% endif %}
+            </li>
+            <li class="page-item"><span class="page-link">{{ object_list.number }}</span></li>
+            <li class="page-item {% if not object_list.has_next %}disabled{% endif %}">
+                {% if object_list.has_next %}
+                    <a class="page-link" href="{% url 'blog:list' object_list.next_page_number %}">Next</a>
+                {% else %}
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
 {% endblock content %}
 
 <!--
