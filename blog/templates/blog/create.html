@@ -4,14 +4,17 @@
 {% block title %}Create{% endblock %}
 
 {% block scripts %}
+
 {% endblock scripts %}
 
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tagin.css' %}">
 {% endblock styles %}
 
 {% block content %}
-    <form action="">
+    <form action="" method="post">
+        {% csrf_token %}
         <div class="row">
             <div class="col-8">
                 {{ form.title }}
@@ -25,6 +28,7 @@
                     <label for="{{ form.headline.id_for_label }}" class="form-label">{{ form.headline.name|title }}</label>
                     {{ form.headline }}
                 </div>
+
                 <label for="{{ form.main_category.id_for_label }}" class="form-label">Category</label>
                 {{ form.main_category }}
                 <datalist id="main_category_options">
@@ -38,6 +42,8 @@
                         <option data-parent="{{ sub_category.parent }}" >{{ sub_category }}</option>
                     {% endfor %}
                 </datalist>
+
+                {{ form.tags }}
             </div>
         </div>
     </form>
@@ -128,4 +134,13 @@
         })
     </script>
     <!-- end DROPDOWN -->
+
+    <!-- start TAGIN -->
+    <script src="{% static 'js/tagin.js' %}"></script>
+    <script>
+        for (const el of document.querySelectorAll('.tagin')) {
+            tagin(el)
+        }
+    </script>
+    <!-- end TAGIN -->
 {% endblock %}

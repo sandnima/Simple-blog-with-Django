@@ -14,7 +14,7 @@ from .models import (
     get_main_other_category,
     get_sub_other_category
 )
-from .forms import ArticleModelForm
+from .forms import ArticleCreateForm
 from django.urls import reverse
 
 
@@ -37,8 +37,16 @@ class ArticleDetailView(DetailView):
 
 @login_required
 def article_create_view(request):
+    form_class = ArticleCreateForm()
+    if request.method == "POST":
+        form_class = ArticleCreateForm(request.POST)
+        if form_class.is_valid():
+            print(form_class.cleaned_data)
+        else:
+            print(form_class.errors)
+        
     template_name = 'blog/create.html'
-    form_class = ArticleModelForm
+    
     get_main_other_category()
     get_sub_other_category()
     context = {
@@ -52,7 +60,7 @@ def article_create_view(request):
 class ArticleUpdateView(UpdateView):
     model = Article
     template_name = 'blog/create.html'
-    form_class = ArticleModelForm
+    form_class = ""
     
     # success_url = '/'
     def form_valid(self, form):

@@ -3,7 +3,7 @@ from .models import Article, MainCategory, Meta
 from ckeditor.fields import RichTextFormField
 
 
-class ArticleModelForm(forms.Form):
+class ArticleCreateForm(forms.Form):
     title = forms.CharField(
         max_length=60,
         widget=forms.TextInput(
@@ -39,12 +39,25 @@ class ArticleModelForm(forms.Form):
     )
     sub_category = forms.CharField(
         max_length=60,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'dir': 'auto',
                 'class': 'form-control mb-3',
                 'list': 'sub_category_options',
                 'placeholder': 'Sub Category',
+            },
+        ),
+    )
+    tags = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={
+                'dir': 'auto',
+                'class': 'form-control mb-3 tagin',
+                'list': 'sub_category_options',
+                'placeholder': 'Sub Category',
+                'data-separator': '" "'
             },
         ),
     )
