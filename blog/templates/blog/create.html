@@ -109,14 +109,22 @@
     <script>
         $("#{{ form.main_category.id_for_label }}").focusout(function() {
             let parent = $("#{{ form.main_category.id_for_label }}").val();
+            let enabled_options = []
             $("#sub_category_options option").each(function(){
-                if ($(this).attr('data-parent') ==  parent) {
+                if ($(this).data('parent') ==  parent) {
                     $(this).attr('disabled', false)
+                    enabled_options.push($(this).val())
                 }
                 else {
                     $(this).attr('disabled', true)
                 }
+                {#if ($("#{{ form.sub_category.id_for_label }}").val() != ) {#}
+                {##}
+                {# }#}
             })
+            if (!enabled_options.includes($("#{{ form.sub_category.id_for_label }}").val())) {
+                $("#{{ form.sub_category.id_for_label }}").val("");
+            }
         })
     </script>
     <!-- end DROPDOWN -->
