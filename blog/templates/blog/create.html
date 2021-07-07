@@ -4,7 +4,6 @@
 {% block title %}Create{% endblock %}
 
 {% block scripts %}
-
 {% endblock scripts %}
 
 {% block styles %}
@@ -13,11 +12,14 @@
 {% endblock styles %}
 
 {% block content %}
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
             <div class="col-8">
                 {{ form.title }}
+{#                <img id="img_id" src="#" alt="your image" />#}
+                {{ form.image }}
+{#                <input type='file' onchange="upload_img(this);" />#}
                 {{ form.media }}
                 {{ form.content }}
             </div>
@@ -143,4 +145,15 @@
         }
     </script>
     <!-- end TAGIN -->
+
+    <!-- image upload -->
+    <script>
+    function upload_img(input) {
+        if (input.files && input.files[0]) {
+            var src = URL.createObjectURL(input.files[0])
+            $('#img_id').attr('src', src)
+        }
+    }
+    </script>
+
 {% endblock %}

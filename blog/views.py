@@ -14,6 +14,7 @@ from .models import (
     get_main_other_category,
     get_sub_other_category
 )
+from profiles.models import Profile
 from .forms import ArticleCreateForm
 from django.urls import reverse
 
@@ -37,20 +38,34 @@ class ArticleDetailView(DetailView):
 
 @login_required
 def article_create_view(request):
-    form_class = ArticleCreateForm()
+    form = ArticleCreateForm()
     if request.method == "POST":
-        form_class = ArticleCreateForm(request.POST)
-        if form_class.is_valid():
-            print(form_class.cleaned_data)
+        form = ArticleCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data['main_category'])
+            main_category = MainCategory.objects.get_or_create(name=form.cleaned_data['main_category'])[0]
+            sub_category = SubCategory.objects.get_or_create(name=form.cleaned_data['sub_category'])[0]\
+                if form.cleaned_data['sub_category'] else None
+            profile = Profile.objects.get(user=request.user)
+            instance = {
+                'title': form.cleaned_data['title'],
+                'image': request.FILES['image'],
+                'main_category': main_category,
+                'sub_category': sub_category,
+                'author': profile,
+                'content': form.cleaned_data['content'],
+                'headline': form.cleaned_data['headline']
+            }
+            Article.objects.update_or_create(**instance)
         else:
-            print(form_class.errors)
+            print(form.errors)
         
     template_name = 'blog/create.html'
     
     get_main_other_category()
     get_sub_other_category()
     context = {
-        'form': form_class,
+        'form': form,
         'main_category_options': MainCategory.objects.all(),
         'sub_category_options': SubCategory.objects.all()
     }

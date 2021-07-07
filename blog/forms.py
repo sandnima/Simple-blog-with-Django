@@ -15,6 +15,7 @@ class ArticleCreateForm(forms.Form):
             },
         ),
     )
+    image = forms.ImageField()
     content = RichTextFormField()
     headline = forms.CharField(
         max_length=160,
@@ -61,6 +62,9 @@ class ArticleCreateForm(forms.Form):
             },
         ),
     )
+
+    class Meta:
+        model = Article
     
         
 class MetaModelForm(forms.ModelForm):

@@ -143,7 +143,7 @@ class Article(models.Model):
         return reverse("blog:detail", kwargs={"slug": self.slug})
     
     def save(self, *args, **kwargs):
-        if self.slug is None:
+        if self.slug is (None or ""):
             self.slug = slugify(self.title, allow_unicode=True)
         if self.meta is None:
             self.meta = get_default_meta(title=self.title, description=self.headline)
