@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.urls import resolve
 from django.db.models import Count
 from django.views.generic import (
     DetailView,
@@ -15,7 +16,7 @@ from .models import (
     get_sub_other_category
 )
 from profiles.models import Profile
-from .forms import ArticleCreateForm
+from .forms import ArticleUpdateCreateModelForm
 from django.urls import reverse
 
 
@@ -37,29 +38,24 @@ class ArticleDetailView(DetailView):
 
 
 @login_required
-def article_create_view(request):
+def article_update_or_create_view(request, slug=None):
+    if resolve(request.path).url_name:
+        pass
+    article = get_object_or_404(Article, slug=slug) if slug else None
+    form = ArticleUpdateCreateModelForm(request.POST or None, request.FILES or None, instance=article)
     if request.method == "POST":
-        form = ArticleCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data['main_category'])
-            main_category = MainCategory.objects.get_or_create(name=form.cleaned_data['main_category'])[0]
-            sub_category = SubCategory.objects.get_or_create(name=form.cleaned_data['sub_category'])[0]\
-                if form.cleaned_data['sub_category'] else None
             profile = Profile.objects.get(user=request.user)
-            instance = {
-                'title': form.cleaned_data['title'],
-                'image': request.FILES['image'],
-                'main_category': main_category,
-                'sub_category': sub_category,
-                'author': profile,
-                'content': form.cleaned_data['content'],
-                'headline': form.cleaned_data['headline']
-            }
-            Article.objects.update_or_create(**instance)
+            main_category = MainCategory.objects.get_or_create(name=form.cleaned_data['main_category'])[0]
+            sub_category = SubCategory.objects.get_or_create(name=form.cleaned_data['sub_category'])[0] \
+                if form.cleaned_data['sub_category'] else None
+            instance = form.save(commit=False)
+            instance.author = profile
+            instance.main_category = main_category
+            instance.sub_category = sub_category
+            instance.save()
         else:
             print(form.errors)
-    else:
-        form = ArticleCreateForm()
         
     template_name = 'blog/create.html'
     
