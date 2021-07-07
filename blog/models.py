@@ -107,7 +107,7 @@ class Article(models.Model):
     sub_category = models.ForeignKey(SubCategory,
                                      on_delete=models.PROTECT, blank=True, null=True)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
-    content = RichTextField(max_length=2048)
+    content = RichTextField()
     # content = RichTextUploadingField() # Uncomment for Ckeditor upload image option
     headline = models.TextField(max_length=160)
     lang = models.ForeignKey(Language, on_delete=models.SET(get_default_language), blank=True, null=True)

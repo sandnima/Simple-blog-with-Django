@@ -15,7 +15,7 @@ class ArticleModelForm(forms.Form):
             },
         ),
     )
-    content = RichTextFormField(max_length=2048)
+    content = RichTextFormField()
     headline = forms.CharField(
         max_length=160,
         widget=forms.Textarea(
