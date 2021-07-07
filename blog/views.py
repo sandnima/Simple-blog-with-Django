@@ -38,7 +38,6 @@ class ArticleDetailView(DetailView):
 
 @login_required
 def article_create_view(request):
-    form = ArticleCreateForm()
     if request.method == "POST":
         form = ArticleCreateForm(request.POST, request.FILES)
         if form.is_valid():
@@ -59,6 +58,8 @@ def article_create_view(request):
             Article.objects.update_or_create(**instance)
         else:
             print(form.errors)
+    else:
+        form = ArticleCreateForm()
         
     template_name = 'blog/create.html'
     
