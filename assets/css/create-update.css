@@ -1,0 +1,19 @@
+.img-update * {
+    transition: .2s ease;
+}
+.img-update {
+    background-color: #000;
+    cursor: pointer;
+}
+
+.overlay-div {
+    opacity: 0;
+}
+
+.img-update:hover img {
+    opacity: 50%;
+}
+
+.img-update:hover .overlay-div {
+    opacity: 1;
+}

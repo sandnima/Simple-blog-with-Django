@@ -28,6 +28,9 @@
         <option value="$MODULE_DIR$/blog/templates/blog" />
         <option value="$MODULE_DIR$/profiles/templates" />
         <option value="$MODULE_DIR$/profiles/templates/profiles" />
+        <option value="$MODULE_DIR$/templates/socialaccount" />
+        <option value="$MODULE_DIR$/templates/openid" />
+        <option value="$MODULE_DIR$/templates/account" />
       </list>
     </option>
   </component>

@@ -94,7 +94,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             'title': forms.TextInput(
                 attrs={
                     'dir': 'auto',
-                    'class': 'form-control form-control-lg mb-3',
+                    'class': 'form-control form-control-lg mb-2',
                     'placeholder': 'Title',
                     'aria-label': 'Title',
                 },
@@ -104,7 +104,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 attrs={
                     'dir': 'auto',
                     'class': 'form-control',
-                    'style': 'height: 100px;',
+                    'style': 'height: auto;',
                 },
             ),
             'tags': forms.TextInput(

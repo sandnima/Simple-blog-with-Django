@@ -7,6 +7,7 @@
 {% endblock scripts %}
 
 {% block styles %}
+    <link rel="stylesheet" href="{% static 'css/create-update.css' %}">
     <link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">
     <link rel="stylesheet" href="{% static 'css/tagin.css' %}">
 {% endblock styles %}
@@ -17,9 +18,11 @@
         <div class="row">
             <div class="col-8">
                 {{ form.title }}
-{#                <img id="img_id" src="#" alt="your image" />#}
-                {{ form.image }}
-{#                <input type='file' onchange="upload_img(this);" />#}
+                <div class="img-update position-relative rounded mb-3">
+                    <img id="current_image" class="img-fluid rounded" src="{{ form.image.initial.url }}" alt="">
+                    <div class="overlay-div position-absolute top-50 start-50 translate-middle"><span class="text-white fs-5">Edit</span></div>
+                    <input id="input_new_image" type="file" class="form-control mb-3 d-none">
+                </div>
                 {{ form.media }}
                 {{ form.content }}
             </div>
@@ -109,7 +112,7 @@
                 }
                 clearInterval(checkExist);
             }
-        }, 100); // check every 100ms
+        }, 10); // check every 10ms
     </script>
     <!-- end CKEDITOR -->
 
@@ -146,14 +149,10 @@
     </script>
     <!-- end TAGIN -->
 
-    <!-- image upload -->
+    <!-- Trigger -->
     <script>
-    function upload_img(input) {
-        if (input.files && input.files[0]) {
-            var src = URL.createObjectURL(input.files[0])
-            $('#img_id').attr('src', src)
-        }
-    }
+        $("#current_image").click(function () {
+            $("#input_new_image").trigger('click');
+        });
     </script>
-
 {% endblock %}
