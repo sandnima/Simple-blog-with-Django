@@ -2,8 +2,21 @@
     transition: .2s ease;
 }
 .img-update {
+    overflow: hidden;
     background-color: #000;
     cursor: pointer;
+    height: 20em;
+}
+
+.img-update img {
+    /* display: flex;
+    flex: auto;
+    align-items: center;
+    align-content: center;
+    justify-content: center; */
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
 
 .overlay-div {
