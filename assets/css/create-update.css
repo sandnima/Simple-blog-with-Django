@@ -9,13 +9,13 @@
 }
 
 .img-update img {
-    /* display: flex;
-    flex: auto;
-    align-items: center;
-    align-content: center;
-    justify-content: center; */
+    /*display: flex;*/
+    /*flex: auto;*/
+    /*align-items: center;*/
+    /*align-content: center;*/
+    /*justify-content: center;*/
     object-fit: cover;
-    height: 100%;
+    height: 101%;
     width: 100%;
 }
 

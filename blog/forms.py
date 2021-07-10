@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article, MainCategory, Meta
+from .models import Article, MainCategory, SubCategory, Tag, Meta
 from ckeditor.fields import RichTextFormField
 
 
@@ -86,10 +86,32 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             },
         ),
     )
+    tags = forms.CharField(
+        max_length=60,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'dir': 'auto',
+                'class': 'form-control mb-3 tagin',
+                'list': 'sub_category_options',
+                'placeholder': 'Sub Category',
+                'data-separator': ' ',
+            },
+        ),
+    )
+    # image = forms.ImageField(
+    #     widget=forms.ClearableFileInput(
+    #         attrs={
+    #             'class': 'form-control mb-3',
+    #             'onchange': "readURL(this)",
+    #             'accept': "image/png, image/jpeg",
+    #         },
+    #     )
+    # )
     
     class Meta:
         model = Article
-        fields = ('title', 'image', 'content', 'headline', 'tags')
+        fields = ('title', 'image', 'content', 'headline',)
         widgets = {
             'title': forms.TextInput(
                 attrs={
@@ -107,16 +129,26 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                     'style': 'height: auto;',
                 },
             ),
-            'tags': forms.TextInput(
-                attrs={
-                    'dir': 'auto',
-                    'class': 'form-control mb-3 tagin',
-                    'list': 'sub_category_options',
-                    'placeholder': 'Sub Category',
-                    'data-separator': '" "'
-                },
-            ),
         }
+        
+    def clean_main_category(self):
+        return MainCategory.objects.get_or_create(name=self.cleaned_data['main_category'])[0]
+    
+    def clean_sub_category(self):
+        if self.cleaned_data['sub_category']:
+            return SubCategory.objects.get_or_create(name=self.cleaned_data['sub_category'],
+                                                     parent=self.cleaned_data['main_category'])[0]
+        else:
+            return None
+    
+    def clean_tags(self):
+        tags = self.cleaned_data['tags']
+        tags_list = []
+        for tag in tags.split():
+            tag = tag.strip("#")
+            if len(tag) > 0:
+                tags_list.append(Tag.objects.get_or_create(tag_name=tag)[0])
+        return tags_list
     
     # def clean_main_category(self):
     #     main_category_passed = self.cleaned_data.get("main_category")

@@ -45,14 +45,11 @@ def article_update_or_create_view(request, slug=None):
     form = ArticleUpdateCreateModelForm(request.POST or None, request.FILES or None, instance=article)
     if request.method == "POST":
         if form.is_valid():
-            profile = Profile.objects.get(user=request.user)
-            main_category = MainCategory.objects.get_or_create(name=form.cleaned_data['main_category'])[0]
-            sub_category = SubCategory.objects.get_or_create(name=form.cleaned_data['sub_category'])[0] \
-                if form.cleaned_data['sub_category'] else None
             instance = form.save(commit=False)
-            instance.author = profile
-            instance.main_category = main_category
-            instance.sub_category = sub_category
+            instance.author = Profile.objects.get(user=request.user)
+            instance.main_category = form.cleaned_data['main_category']
+            instance.sub_category = form.cleaned_data['sub_category']
+            instance.tags.set(form.cleaned_data['tags'])
             instance.save()
         else:
             print(form.errors)
