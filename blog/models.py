@@ -129,7 +129,7 @@ class Article(models.Model):
         format='JPEG',
         options={'quality': 95}
     )
-    tags = models.ManyToManyField(Tag, blank=True, null=True)
+    tags = models.ManyToManyField(Tag, blank=True)
     liked = models.ManyToManyField(User, blank=True)
     status = models.CharField(max_length=Status.max_length, choices=Status.STATUS_CHOICES,
                               default=Status.DRAFT)

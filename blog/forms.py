@@ -62,6 +62,17 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
     #         },
     #     ),
     # )
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs['instance']
+        updated_initial = dict()
+        updated_initial['main_category'] = instance.main_category
+        updated_initial['sub_category'] = instance.sub_category
+        updated_initial['tags'] = ""
+        for tag in instance.tags.all():
+            updated_initial['tags'] += "#"+str(tag).upper()+" "
+        kwargs.update(initial=updated_initial)
+        super(ArticleUpdateCreateModelForm, self).__init__(*args, **kwargs)
     
     main_category = forms.CharField(
         max_length=60,
@@ -93,8 +104,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             attrs={
                 'dir': 'auto',
                 'class': 'form-control mb-3 tagin',
-                'list': 'sub_category_options',
-                'placeholder': 'Sub Category',
+                'placeholder': 'Tags',
                 'data-separator': ' ',
             },
         ),
@@ -132,12 +142,12 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         }
         
     def clean_main_category(self):
-        return MainCategory.objects.get_or_create(name=self.cleaned_data['main_category'])[0]
+        return MainCategory.objects.get_or_create(name=self.cleaned_data['main_category'].capitalize())[0]
     
     def clean_sub_category(self):
         if self.cleaned_data['sub_category']:
-            return SubCategory.objects.get_or_create(name=self.cleaned_data['sub_category'],
-                                                     parent=self.cleaned_data['main_category'])[0]
+            return SubCategory.objects.get_or_create(name=self.cleaned_data['sub_category'].capitalize(),
+                                                     parent=self.cleaned_data['main_category'].capitalize())[0]
         else:
             return None
     
@@ -147,7 +157,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         for tag in tags.split():
             tag = tag.strip("#")
             if len(tag) > 0:
-                tags_list.append(Tag.objects.get_or_create(tag_name=tag)[0])
+                tags_list.append(Tag.objects.get_or_create(tag_name=tag.upper())[0])
         return tags_list
     
     # def clean_main_category(self):
