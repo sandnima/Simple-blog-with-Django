@@ -19,9 +19,9 @@
             <div class="col-8">
                 {{ form.title }}
                 <div class="img-update position-relative rounded mb-3">
-                    <img id="current_image" class="img-fluid rounded" src="{{ form.image.initial.url }}" alt="">
+                    <img id="current_image" class="img-fluid rounded" src="{{ form.image.initial.url }}">
                     <div class="overlay-div position-absolute top-50 start-50 translate-middle"><span class="text-white fs-5">Edit</span></div>
-                    <input id="input_new_image" type="file" class="form-control mb-3 d-none">
+                    <input id="input_new_image" type="file" onchange="readURL(this)" class="form-control mb-3 d-none" accept="image/png, image/jpeg">
                 </div>
                 {{ form.media }}
                 {{ form.content }}
@@ -112,7 +112,7 @@
                 }
                 clearInterval(checkExist);
             }
-        }, 10); // check every 10ms
+        }, 50); // check every 50ms
     </script>
     <!-- end CKEDITOR -->
 
@@ -149,10 +149,18 @@
     </script>
     <!-- end TAGIN -->
 
-    <!-- Trigger -->
+    <!-- start inputTrigger -->
     <script>
         $("#current_image").click(function () {
             $("#input_new_image").trigger('click');
         });
+        function readURL(input) {
+            let reader = new FileReader()
+            reader.onload = function(e) {
+                $('#current_image').attr('src', e.target.result)
+            }
+            reader.readAsDataURL(input.files[0])
+        }
     </script>
+    <!-- end inputTrigger -->
 {% endblock %}
