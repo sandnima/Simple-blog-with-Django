@@ -64,14 +64,15 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
     # )
 
     def __init__(self, *args, **kwargs):
-        instance = kwargs['instance']
-        updated_initial = dict()
-        updated_initial['main_category'] = instance.main_category
-        updated_initial['sub_category'] = instance.sub_category
-        updated_initial['tags'] = ""
-        for tag in instance.tags.all():
-            updated_initial['tags'] += "#"+str(tag).upper()+" "
-        kwargs.update(initial=updated_initial)
+        if kwargs['instance']:
+            instance = kwargs['instance']
+            updated_initial = dict()
+            updated_initial['main_category'] = instance.main_category
+            updated_initial['sub_category'] = instance.sub_category
+            updated_initial['tags'] = ""
+            for tag in instance.tags.all():
+                updated_initial['tags'] += "#"+str(tag).upper()+" "
+            kwargs.update(initial=updated_initial)
         super(ArticleUpdateCreateModelForm, self).__init__(*args, **kwargs)
     
     main_category = forms.CharField(
