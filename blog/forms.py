@@ -19,7 +19,17 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 updated_initial['tags'] += "#"+str(tag).upper()+" "
             kwargs.update(initial=updated_initial)
         super(ArticleUpdateCreateModelForm, self).__init__(*args, **kwargs)
-    
+
+    image = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control mb-3 d-none',
+                'tabindex': '-1',
+                'onchange': "readURL(this)",
+                'accept': "image/png, image/jpeg",
+            },
+        )
+    )
     main_category = forms.CharField(
         max_length=60,
         widget=forms.TextInput(
@@ -54,15 +64,6 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 'data-separator': ' ',
             },
         ),
-    )
-    image = forms.ImageField(
-        widget=forms.FileInput(
-            attrs={
-                'class': 'form-control mb-3 d-none',
-                'onchange': "readURL(this)",
-                'accept': "image/png, image/jpeg",
-            },
-        )
     )
     
     class Meta:
