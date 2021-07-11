@@ -3,7 +3,6 @@
 }
 .img-update {
     overflow: hidden;
-    background-color: #000;
     cursor: pointer;
     height: 20em;
 }
@@ -16,17 +15,17 @@
     /*justify-content: center;*/
     object-fit: cover;
     height: 101%;
-    width: 100%;
+    width: 101%;
 }
 
 .overlay-div {
+    object-fit: cover;
+    background-color: #000;
     opacity: 0;
+    height: 100%;
+    width: 100%;
 }
 
-.img-update:hover img {
-    opacity: 50%;
-}
-
-.img-update:hover .overlay-div {
-    opacity: 1;
+.overlay-div:hover {
+    opacity: 0.5;
 }
