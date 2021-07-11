@@ -76,7 +76,7 @@
 
     <!-- start DROPDOWN -->
     <script>
-        $("#{{ form.main_category.id_for_label }}").focusout(function() {
+        $("#{{ form.main_category.id_for_label }}").keyup(function() {
             let parent = $("#{{ form.main_category.id_for_label }}").val();
             let enabled_options = []
             $("#sub_category_options option").each(function(){
