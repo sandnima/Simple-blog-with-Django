@@ -23,7 +23,8 @@ function tagin(el, option = {}) {
   ; (function () {
     const className = classWrapper + ' ' + el.className.replace(classElement, '').trim()
     const tags = getValue().trim() === '' ? '' : getValues().map(templateTag).join('')
-    const template = `<div class="${className}">${tags}<input type="text" class="${classInput}" placeholder="${placeholder}"></div>`
+    const template = `<div class="${className}">${tags}<input list="tag_options" type="text" class="${classInput}"
+placeholder="${placeholder}"></div>`
     el.insertAdjacentHTML('afterend', template) // insert template after element
   })()
 
@@ -75,7 +76,9 @@ function tagin(el, option = {}) {
     const string = input.value || input.getAttribute('placeholder') || ''
     fakeEl.innerHTML = string.replace(/ /g, '&nbsp;')
     document.body.appendChild(fakeEl)
-    input.style.setProperty('width', Math.ceil(window.getComputedStyle(fakeEl).width.replace('px', '')) + 1 + 'px')
+    input.style.setProperty('width',
+        Math.ceil(window.getComputedStyle(fakeEl).width.replace('px', '')) + 25 + 'px')
+    // input.style.setProperty('width', '100%')
     fakeEl.remove()
   }
   function addTag(force = false) {

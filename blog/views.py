@@ -12,6 +12,7 @@ from .models import (
     Article,
     MainCategory,
     SubCategory,
+    Tag,
     get_main_other_category,
     get_sub_other_category
 )
@@ -62,7 +63,8 @@ def article_update_or_create_view(request, slug=None):
     context = {
         'form': form,
         'main_category_options': MainCategory.objects.all(),
-        'sub_category_options': SubCategory.objects.all()
+        'sub_category_options': SubCategory.objects.all(),
+        'tag_options': Tag.objects.all(),
     }
     return render(request, template_name, context)
 
