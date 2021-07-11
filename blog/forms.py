@@ -3,66 +3,11 @@ from .models import Article, MainCategory, SubCategory, Tag, Meta
 from ckeditor.fields import RichTextFormField
 
 
-class ArticleUpdateCreateModelForm(forms.ModelForm):
-    # title = forms.CharField(
-    #     max_length=60,
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'dir': 'auto',
-    #             'class': 'form-control form-control-lg mb-3',
-    #             'placeholder': 'Title',
-    #             'aria-label': 'Title',
-    #         },
-    #     ),
-    # )
-    # image = forms.ImageField()
-    # content = RichTextFormField()
-    # headline = forms.CharField(
-    #     max_length=160,
-    #     widget=forms.Textarea(
-    #         attrs={
-    #             'dir': 'auto',
-    #             'class': 'form-control',
-    #             'style': 'height: 100px;',
-    #         },
-    #     ),
-    # )
-    # main_category = forms.CharField(
-    #     max_length=60,
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'dir': 'auto',
-    #             'class': 'form-control mb-2',
-    #             'list': 'main_category_options',
-    #             'placeholder': 'Main Category',
-    #         },
-    #     ),
-    # )
-    # sub_category = forms.CharField(
-    #     max_length=60,
-    #     required=False,
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'dir': 'auto',
-    #             'class': 'form-control mb-3',
-    #             'list': 'sub_category_options',
-    #             'placeholder': 'Sub Category',
-    #         },
-    #     ),
-    # )
-    # tags = forms.CharField(
-    #     max_length=255,
-    #     widget=forms.TextInput(
-    #         attrs={
-    #             'dir': 'auto',
-    #             'class': 'form-control mb-3 tagin',
-    #             'list': 'sub_category_options',
-    #             'placeholder': 'Sub Category',
-    #             'data-separator': '" "'
-    #         },
-    #     ),
-    # )
+class CustomFileInput(forms.FileInput):
+    pass
 
+
+class ArticleUpdateCreateModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if kwargs['instance']:
             instance = kwargs['instance']
@@ -110,15 +55,15 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             },
         ),
     )
-    # image = forms.ImageField(
-    #     widget=forms.ClearableFileInput(
-    #         attrs={
-    #             'class': 'form-control mb-3',
-    #             'onchange': "readURL(this)",
-    #             'accept': "image/png, image/jpeg",
-    #         },
-    #     )
-    # )
+    image = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control mb-3 d-none',
+                'onchange': "readURL(this)",
+                'accept': "image/png, image/jpeg",
+            },
+        )
+    )
     
     class Meta:
         model = Article

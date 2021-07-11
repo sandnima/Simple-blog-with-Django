@@ -51,6 +51,7 @@ def article_update_or_create_view(request, slug=None):
             instance.sub_category = form.cleaned_data['sub_category']
             instance.tags.set(form.cleaned_data['tags'])
             instance.save()
+            form = ArticleUpdateCreateModelForm(instance=instance)
         else:
             print(form.errors)
         
