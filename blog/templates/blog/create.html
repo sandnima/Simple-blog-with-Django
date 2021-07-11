@@ -4,7 +4,6 @@
 {% block title %}Create{% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/tagin.js' %}" defer></script>
 {% endblock scripts %}
 
 {% block styles %}
@@ -97,6 +96,7 @@
     <!-- end DROPDOWN -->
 
     <!-- start TAGIN -->
+    <script src="{% static 'js/tagin.js' %}"></script>
     <script>
         for (const el of document.querySelectorAll('.tagin')) {
             tagin(el)
