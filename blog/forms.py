@@ -88,12 +88,12 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         }
         
     def clean_main_category(self):
-        return MainCategory.objects.get_or_create(name=self.cleaned_data['main_category'].capitalize())[0]
+        return MainCategory.objects.get_or_create(name=str(self.cleaned_data['main_category']).capitalize())[0]
     
     def clean_sub_category(self):
         if self.cleaned_data['sub_category']:
-            return SubCategory.objects.get_or_create(name=self.cleaned_data['sub_category'].capitalize(),
-                                                     parent=self.cleaned_data['main_category'].capitalize())[0]
+            return SubCategory.objects.get_or_create(name=str(self.cleaned_data['sub_category']).capitalize(),
+                                                     parent=self.cleaned_data['main_category'])[0]
         else:
             return None
     
@@ -105,10 +105,6 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             if len(tag) > 0:
                 tags_list.append(Tag.objects.get_or_create(tag_name=tag.upper())[0])
         return tags_list
-    
-    # def clean_main_category(self):
-    #     main_category_passed = self.cleaned_data.get("main_category")
-    #     return MainCategory.objects.get_or_create(main_category_passed)[0]
 
 
 class MetaModelForm(forms.ModelForm):
