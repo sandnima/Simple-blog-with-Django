@@ -52,10 +52,13 @@ def get_sub_other_category():
 
 
 class SubCategory(models.Model):
-    name = models.CharField(unique=True, max_length=60)
+    name = models.CharField(max_length=60)
     description = models.TextField(blank=True)
     parent = models.ForeignKey(MainCategory, default=get_main_other_category,
                                on_delete=models.SET(get_main_other_category))
+    
+    class Meta:
+        unique_together = ('name', 'parent',)
 
     def __str__(self):
         return f'{self.name}'
