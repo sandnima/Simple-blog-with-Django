@@ -26,6 +26,16 @@
     width: 100%;
 }
 
-.overlay-div:hover {
+.img-update span {
+    opacity: 0;
+}
+
+.img-update:hover .overlay-div {
     opacity: 0.5;
+}
+
+
+
+.img-update:hover span {
+    opacity: 1;
 }
