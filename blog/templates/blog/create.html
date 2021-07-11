@@ -32,7 +32,7 @@
                 <button type="submit" class="btn col-6 btn-primary mb-3">Save</button>
 
                 <div class="mb-3">
-                    <label for="{{ form.headline.id_for_label }}" class="form-label">{{ form.headline.name|title }}</label>
+                    <label for="{{ form.headline.id_for_label }}" class="form-label">{{ form.headline.label }}</label>
                     {{ form.headline }}
                 </div>
 
@@ -50,6 +50,7 @@
                     {% endfor %}
                 </datalist>
 
+                <label for="{{ form.tags.id_for_label }}" class="form-label">{{ form.tags.label }}</label>
                 {{ form.tags }}
             </div>
         </div>
