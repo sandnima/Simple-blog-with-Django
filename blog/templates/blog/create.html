@@ -18,8 +18,8 @@
         <div class="row">
             <div class="col-8">
                 {{ form.title }}
-                <div class="img-update position-relative rounded mb-3">
-                    <img id="current_image" src="{% if form.image.initial.url %}
+                <div id="current_image" class="img-update position-relative rounded mb-3">
+                    <img src="{% if form.image.initial.url %}
 {{ form.image.initial.url }}{% else %}{% static 'images/placeholder-banner.png' %}{% endif %}">
                     <div class="overlay-div position-absolute top-50 start-50 translate-middle"></div>
                     <span class="position-absolute top-50 start-50 translate-middle text-white fs-5">Edit</span>
