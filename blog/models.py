@@ -184,6 +184,7 @@ class ApprovedArticle(AbstractArticle):
     meta = models.OneToOneField(ApprovedMeta, on_delete=models.PROTECT, blank=True, null=True)
     liked = models.ManyToManyField(User, blank=True)
     origin = models.OneToOneField(Article, on_delete=models.PROTECT)
+    approver = models.ForeignKey(Profile, on_delete=models.PROTECT)
     
     def save(self, *args, **kwargs):
         if self.meta is None:
