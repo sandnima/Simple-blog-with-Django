@@ -31,6 +31,8 @@
         <option value="$MODULE_DIR$/templates/socialaccount" />
         <option value="$MODULE_DIR$/templates/openid" />
         <option value="$MODULE_DIR$/templates/account" />
+        <option value="$MODULE_DIR$/dashboard/templates/dashboard" />
+        <option value="$MODULE_DIR$/dashboard/templates" />
       </list>
     </option>
   </component>
