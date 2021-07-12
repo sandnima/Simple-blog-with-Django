@@ -23,18 +23,6 @@ class Tag(models.Model):
         return f'{self.tag_name}'
 
 
-def get_default_meta(title, description):
-    return Meta.objects.get_or_create(title_tag=title, description_tag=description)[0]
-    
-
-class Meta(models.Model):
-    title_tag = models.CharField(unique=True, max_length=60)
-    description_tag = models.TextField(unique=True, max_length=160)
-    
-    def __str__(self):
-        return f'{self.title_tag}'
-
-
 def get_main_other_category():
     return MainCategory.objects.get_or_create(name='Other')[0]
 
@@ -101,10 +89,21 @@ class Status(models.Model):
     ]
 
 
-class Article(models.Model):
+class AbstractMeta(models.Model):
+    title_tag = models.CharField(unique=True, max_length=60)
+    description_tag = models.TextField(unique=True, max_length=160)
+    
+    def __str__(self):
+        return f'{self.title_tag}'
+    
+    class Meta:
+        abstract = True
+
+
+class AbstractArticle(models.Model):
     title = models.CharField(unique=True, max_length=60)
     slug = models.SlugField(unique=True, max_length=60, allow_unicode=True, blank=True)
-    meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
+    # meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
     main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
                                       on_delete=models.PROTECT)
     sub_category = models.ForeignKey(SubCategory,
@@ -133,7 +132,6 @@ class Article(models.Model):
         options={'quality': 95}
     )
     tags = models.ManyToManyField(Tag, blank=True)
-    liked = models.ManyToManyField(User, blank=True)
     status = models.CharField(max_length=Status.max_length, choices=Status.STATUS_CHOICES,
                               default=Status.DRAFT)
     updated_at = models.DateTimeField(auto_now=True)
@@ -148,9 +146,56 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if self.slug is (None or ""):
             self.slug = slugify(self.title, allow_unicode=True)
-        if self.meta is None:
-            self.meta = get_default_meta(title=self.title, description=self.headline)
         if self.lang is None:
             code = detect(self.content)
             self.lang = Language.objects.get_or_create(code=code)[0]
         return super().save(*args, **kwargs)
+    
+    class Meta:
+        abstract = True
+
+
+def get_or_create_meta(class_, title, description):
+    return class_.objects.get_or_create(title_tag=title, description_tag=description)[0]
+
+
+class Meta(AbstractMeta):
+    pass
+
+
+class ApprovedMeta(AbstractMeta):
+    def approve_meta(self, obj):
+        self.title_tag = obj.title_tag
+        self.description_tag = obj.description_tag
+        self.save()
+        return self
+
+
+class Article(AbstractArticle):
+    meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
+    
+    def save(self, *args, **kwargs):
+        if self.meta is None:
+            self.meta = get_or_create_meta(class_=Meta, title=self.title, description=self.headline)
+        return super().save(*args, **kwargs)
+    
+
+class ApprovedArticle(AbstractArticle):
+    meta = models.OneToOneField(ApprovedMeta, on_delete=models.PROTECT, blank=True, null=True)
+    liked = models.ManyToManyField(User, blank=True)
+    
+    def save(self, *args, **kwargs):
+        if self.meta is None:
+            self.meta = get_or_create_meta(class_=ApprovedMeta, title=self.title, description=self.headline)
+        return super().save(*args, **kwargs)
+    
+    def approve_article(self, obj):
+        approved_meta = get_or_create_meta(class_=ApprovedMeta, title=obj.meta.title_tag,
+                                           description=obj.meta.description_tag)
+        self.title = obj.title
+        self.slug = obj.slug
+        self.meta = approved_meta[0]
+        self.main_category = obj.main_category[0]
+        self.sub_category = obj.sub_category[0]
+        self.save()
+        return self
