@@ -183,19 +183,28 @@ class Article(AbstractArticle):
 class ApprovedArticle(AbstractArticle):
     meta = models.OneToOneField(ApprovedMeta, on_delete=models.PROTECT, blank=True, null=True)
     liked = models.ManyToManyField(User, blank=True)
+    origin = models.OneToOneField(Article, on_delete=models.PROTECT)
     
     def save(self, *args, **kwargs):
         if self.meta is None:
             self.meta = get_or_create_meta(class_=ApprovedMeta, title=self.title, description=self.headline)
         return super().save(*args, **kwargs)
     
-    def approve_article(self, obj):
-        approved_meta = get_or_create_meta(class_=ApprovedMeta, title=obj.meta.title_tag,
-                                           description=obj.meta.description_tag)
-        self.title = obj.title
-        self.slug = obj.slug
+    def approve_article(self):
+        approved_meta = get_or_create_meta(class_=ApprovedMeta, title=self.origin.meta.title_tag,
+                                           description=self.origin.meta.description_tag)
+        self.title = self.origin.title
+        self.slug = self.origin.slug
         self.meta = approved_meta[0]
-        self.main_category = obj.main_category[0]
-        self.sub_category = obj.sub_category[0]
+        self.main_category = self.origin.main_category[0]
+        self.sub_category = self.origin.sub_category[0]
+        self.author = self.origin.author[0]
+        self.content = self.origin.content
+        self.headline = self.origin.headline
+        self.lang = self.origin.lang
+        self.image = self.origin.image
+        self.medium_image = self.origin.medium_image
+        self.small_image = self.origin.small_image
+        self.tags = self.origin.tags
         self.save()
         return self
