@@ -24,6 +24,20 @@ from .forms import ArticleUpdateCreateModelForm
 
 
 @login_required
+def article_list(request, page=1):
+    template_name = 'dashboard/article_list.html'
+    user_profile = Profile.objects.get(user=request.user)
+    articles = Article.objects.all().filter(author=user_profile).order_by('-updated_at')
+    paginate_by = 10
+    pages = Paginator(articles, paginate_by)
+    queryset = pages.page(page)
+    context = {
+        'object_list': queryset,
+    }
+    return render(request, template_name, context)
+
+
+@login_required
 def article_update_or_create_view(request, slug=None):
     if resolve(request.path).url_name:
         pass
@@ -41,7 +55,7 @@ def article_update_or_create_view(request, slug=None):
         else:
             print(form.errors)
     
-    template_name = 'dashboard/create.html'
+    template_name = 'dashboard/create_update.html'
     
     get_main_other_category()
     get_sub_other_category()
