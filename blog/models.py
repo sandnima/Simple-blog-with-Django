@@ -191,20 +191,18 @@ class ApprovedArticle(AbstractArticle):
         return super().save(*args, **kwargs)
     
     def approve_article(self):
-        approved_meta = get_or_create_meta(class_=ApprovedMeta, title=self.origin.meta.title_tag,
-                                           description=self.origin.meta.description_tag)
         self.title = self.origin.title
         self.slug = self.origin.slug
-        self.meta = approved_meta[0]
-        self.main_category = self.origin.main_category[0]
-        self.sub_category = self.origin.sub_category[0]
-        self.author = self.origin.author[0]
+        self.meta.approve_meta(self.origin.meta)
+        self.main_category = self.origin.main_category
+        self.sub_category = self.origin.sub_category
+        self.author = self.origin.author
         self.content = self.origin.content
         self.headline = self.origin.headline
         self.lang = self.origin.lang
         self.image = self.origin.image
         self.medium_image = self.origin.medium_image
         self.small_image = self.origin.small_image
-        self.tags = self.origin.tags
+        self.tags.set(self.origin.tags.all())
         self.save()
         return self
