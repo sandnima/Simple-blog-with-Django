@@ -68,12 +68,13 @@
                                         <span>{{ object.like_count|default:"N/A" }}</span>
                                     </td>
                                     <td class="border-0">
-                                        <span class="text-{% if object.status == "DFT" %}secondary
+                                        <div class="d-flex text-{% if object.status == "DFT" %}secondary
     {% elif object.status == "REQ" or object.status == "PND" %}warning
     {% elif object.status == "PUB" %}success{% elif object.status == "EDT" %}info
     {% elif object.status == "DEN" or object.status == "TRS" %}danger{% endif %}">
-                                            {{ object.get_status_display }}
-                                        </span>
+                                            <span class="d-none d-md-inline">{{ object.get_status_display }}</span>
+                                            <i class="bi bi-circle-fill d-md-none mx-auto"></i>
+                                        </div>
                                     </td>
                                     <td class="border-0 d-none d-md-table-cell">
                                         <span class="fw-b">
