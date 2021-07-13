@@ -31,8 +31,10 @@
                         <thead class="table-light">
                             <tr>
                                 <th class="border-0 rounded-start"></th>
-                                <th class="border-0">Title</th>
-                                <th class="border-0 d-none d-md-table-cell">Likes</th>
+                                <th class="border-0">Article</th>
+                                <th class="border-0 d-none d-lg-table-cell">
+                                    <span class="me-2">Likes</span><i class="bi bi-heart-fill text-danger"></i>
+                                </th>
                                 <th class="border-0">Status</th>
                                 <th class="border-0 d-none d-md-table-cell">Last Update</th>
                                 <th class="border-0 rounded-end">Edit</th>
@@ -47,10 +49,14 @@
                                     </td>
                                     <td class="border-0">
                                         <div class="d-flex align-items-center">
-    {#                                        <img class="img-thumbnail rounded-circle border-0" alt="{{ object.title }}"#}
-    {#                                             src="{{ object.small_image.url }}">#}
+                                            <div class="d-none d-md-block overflow-hidden rounded-circle me-3"
+                                                 style="height: 50px; width: 50px">
+                                                <img class="cover-image"
+                                                     alt="{{ object.title }}"
+                                                     src="{{ object.small_image.url }}">
+                                            </div>
                                             <div class="">
-                                                <span class="h6 text-truncate" style="max-width: 10px">
+                                                <span class="h6">
                                                     {{ object.title }}
                                                 </span>
                                                 <a href="{{ object.absolute_url }}" target="_blank">
@@ -58,7 +64,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="border-0 d-none d-md-table-cell">
+                                    <td class="border-0 d-none d-lg-table-cell">
                                         <span>{{ object.like_count|default:"N/A" }}</span>
                                     </td>
                                     <td class="border-0">
@@ -76,7 +82,10 @@
                                     </td>
                                     <td class="border-0">
                                         <a class="d-grid gap-2 text-decoration-none" href="{{ object.update_url }}">
-                                            <button type="button" class="btn btn-primary px-2 px-md-5">Edit</button>
+                                            <button type="button" class="btn btn-primary px-md-3 px-lg-5">
+                                                <i class="bi bi-pencil-square me-md-2"></i>
+                                                <span class="d-none d-md-inline text-nowrap">Edit</span>
+                                            </button>
                                         </a>
                                     </td>
                                 </tr>
