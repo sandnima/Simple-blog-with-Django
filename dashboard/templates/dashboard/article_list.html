@@ -10,73 +10,81 @@
 {% endblock styles %}
 
 {% block content %}
+    <h4 class="col-4">Articles List</h4>
     <div class="row">
-        <h4 class="">Articles List</h4>
+        <div class="flex-row align-items-center justify-content-between mb-4">
+            <div class="text-end">
+                <button type="button" class="btn btn-secondary col-sm-2 col-md-3 col-lg-2">
+                    <i class="bi bi-plus-lg me-md-2"></i>
+                    <span class="d-none d-md-inline text-nowrap">Create new</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="row">
         <div class="card border-0 shadow-sm mb-4">
-        <div class="card-body">
-            <div class="table-responsive text-nowrap">
-                <table class="table table-centered table align-middle table-nowrap mb-0 rounded" dir="auto">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="border-0 rounded-start"></th>
-                            <th class="border-0">Title</th>
-                            <th class="border-0">Likes</th>
-                            <th class="border-0">Status</th>
-                            <th class="border-0">Last Update</th>
-                            <th class="border-0 rounded-end">Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for object in object_list %}
-                            <!-- Item -->
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-centered table align-middle table-nowrap mb-0 rounded" dir="auto">
+                        <thead class="table-light">
                             <tr>
-                                <td class="border-0">
-                                    <span class="fw-bold">{{ forloop.counter }}</span>
-                                </td>
-                                <td class="border-0">
-                                    <div class="d-flex align-items-center">
-{#                                        <img class="img-thumbnail rounded-circle border-0" alt="{{ object.title }}"#}
-{#                                             src="{{ object.small_image.url }}">#}
-                                        <div class="text-nowrap">
-                                            <span class="h6 text-truncate" style="max-width: 10px">{{ object.title }}
-                                            </span>
-                                            <a href="{{ object.absolute_url }}" target="_blank"><i
-                                                    class="bi bi-box-arrow-up-right"></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="border-0">
-                                    <span>{{ object.like_count|default:"N/A" }}</span>
-                                </td>
-                                <td class="border-0">
-                                    <span class="text-{% if object.status == "DFT" %}secondary
-{% elif object.status == "REQ" or object.status == "PND" %}warning
-{% elif object.status == "PUB" %}success{% elif object.status == "EDT" %}info
-{% elif object.status == "DEN" or object.status == "TRS" %}danger{% endif %}">
-                                        {{ object.get_status_display }}
-                                    </span>
-                                </td>
-                                <td class="border-0">
-                                    <span class="fw-b">
-                                        {{ object.updated_at|date:"M j, Y" }} . {{ object.updated_at|time:"h:i A" }}
-                                    </span>
-                                </td>
-                                <td class="border-0">
-                                    <a class="d-grid gap-2" href="{{ object.update_url }}">
-                                        <button type="button" class="btn btn-primary px-5">Edit</button>
-                                    </a>
-                                </td>
+                                <th class="border-0 rounded-start"></th>
+                                <th class="border-0">Title</th>
+                                <th class="border-0">Likes</th>
+                                <th class="border-0">Status</th>
+                                <th class="border-0">Last Update</th>
+                                <th class="border-0 rounded-end">Edit</th>
                             </tr>
-                            <!-- End of Item -->
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for object in object_list %}
+                                <!-- Item -->
+                                <tr>
+                                    <td class="border-0">
+                                        <span class="fw-bold">{{ forloop.counter }}</span>
+                                    </td>
+                                    <td class="border-0">
+                                        <div class="d-flex align-items-center">
+    {#                                        <img class="img-thumbnail rounded-circle border-0" alt="{{ object.title }}"#}
+    {#                                             src="{{ object.small_image.url }}">#}
+                                            <div class="text-nowrap">
+                                                <span class="h6 text-truncate" style="max-width: 10px">{{ object.title }}
+                                                </span>
+                                                <a href="{{ object.absolute_url }}" target="_blank"><i
+                                                        class="bi bi-box-arrow-up-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="border-0">
+                                        <span>{{ object.like_count|default:"N/A" }}</span>
+                                    </td>
+                                    <td class="border-0">
+                                        <span class="text-{% if object.status == "DFT" %}secondary
+    {% elif object.status == "REQ" or object.status == "PND" %}warning
+    {% elif object.status == "PUB" %}success{% elif object.status == "EDT" %}info
+    {% elif object.status == "DEN" or object.status == "TRS" %}danger{% endif %}">
+                                            {{ object.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td class="border-0">
+                                        <span class="fw-b">
+                                            {{ object.updated_at|date:"M j, Y" }} . {{ object.updated_at|time:"h:i A" }}
+                                        </span>
+                                    </td>
+                                    <td class="border-0">
+                                        <a class="d-grid gap-2 text-decoration-none" href="{{ object.update_url }}">
+                                            <button type="button" class="btn btn-primary px-5">Edit</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <!-- End of Item -->
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock content %}
 
