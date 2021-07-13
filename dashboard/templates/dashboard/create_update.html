@@ -118,7 +118,7 @@
         function readURL(input) {
             let reader = new FileReader()
             reader.onload = function(e) {
-                $('#current_image').attr('src', e.target.result)
+                $('#current_image img').attr('src', e.target.result)
             }
             reader.readAsDataURL(input.files[0])
         }
