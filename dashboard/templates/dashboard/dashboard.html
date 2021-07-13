@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Article List{% endblock %}
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Blog</div>
+                <div class="card-body">
+                    <h5 class="card-title">Blog app</h5>
+                    <p class="card-text">Your blog app is ready for adding content.</p>
+                    <a href="{% url 'dashboard:article_list' %}" class="btn btn-secondary">Open blog app</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock content %}
+
+{% block extra_body %}
+{% endblock extra_body %}

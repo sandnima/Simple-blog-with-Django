@@ -22,6 +22,13 @@ from profiles.models import Profile
 # import forms
 from .forms import ArticleUpdateCreateModelForm
 
+@login_required
+def dashboard(request):
+    template_name = 'dashboard/dashboard.html'
+    context = {
+    }
+    return render(request, template_name, context)
+
 
 @login_required
 def article_list(request, page=1):
@@ -39,6 +46,7 @@ def article_list(request, page=1):
 
 @login_required
 def article_update_or_create_view(request, slug=None):
+    template_name = 'dashboard/article_create_update.html'
     if resolve(request.path).url_name:
         pass
     article = get_object_or_404(Article, slug=slug) if slug else None
@@ -55,8 +63,6 @@ def article_update_or_create_view(request, slug=None):
             form = ArticleUpdateCreateModelForm(instance=instance)
         else:
             print(form.errors)
-    
-    template_name = 'dashboard/create_update.html'
     
     get_main_other_category()
     get_sub_other_category()
