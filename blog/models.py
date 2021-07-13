@@ -143,6 +143,9 @@ class AbstractArticle(models.Model):
     def absolute_url(self):
         return reverse("blog:detail", kwargs={"slug": self.slug})
     
+    def update_url(self):
+        return reverse("dashboard:update", kwargs={"slug": self.slug})
+    
     def save(self, *args, **kwargs):
         if self.slug is (None or ""):
             self.slug = slugify(self.title, allow_unicode=True)
