@@ -14,14 +14,13 @@
     <div class="row">
         <div class="flex-row align-items-center justify-content-between mb-4">
             <div class="text-end">
-                <button type="button" class="btn btn-secondary col-sm-2 col-md-3 col-lg-2">
+                <button type="button" class="btn btn-dark col-sm-2 col-md-3 col-lg-2">
                     <i class="bi bi-plus-lg me-md-2"></i>
                     <span class="d-none d-md-inline text-nowrap">Create new</span>
                 </button>
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-body">
@@ -31,9 +30,9 @@
                             <tr>
                                 <th class="border-0 rounded-start"></th>
                                 <th class="border-0">Title</th>
-                                <th class="border-0">Likes</th>
+                                <th class="border-0 d-none d-md-table-cell">Likes</th>
                                 <th class="border-0">Status</th>
-                                <th class="border-0">Last Update</th>
+                                <th class="border-0 d-none d-md-table-cell">Last Update</th>
                                 <th class="border-0 rounded-end">Edit</th>
                             </tr>
                         </thead>
@@ -48,15 +47,16 @@
                                         <div class="d-flex align-items-center">
     {#                                        <img class="img-thumbnail rounded-circle border-0" alt="{{ object.title }}"#}
     {#                                             src="{{ object.small_image.url }}">#}
-                                            <div class="text-nowrap">
-                                                <span class="h6 text-truncate" style="max-width: 10px">{{ object.title }}
+                                            <div class="">
+                                                <span class="h6 text-truncate" style="max-width: 10px">
+                                                    {{ object.title }}
                                                 </span>
-                                                <a href="{{ object.absolute_url }}" target="_blank"><i
-                                                        class="bi bi-box-arrow-up-right"></i></a>
+                                                <a href="{{ object.absolute_url }}" target="_blank">
+                                                    <i class="bi bi-box-arrow-up-right"></i></a>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="border-0">
+                                    <td class="border-0 d-none d-md-table-cell">
                                         <span>{{ object.like_count|default:"N/A" }}</span>
                                     </td>
                                     <td class="border-0">
@@ -67,14 +67,14 @@
                                             {{ object.get_status_display }}
                                         </span>
                                     </td>
-                                    <td class="border-0">
+                                    <td class="border-0 d-none d-md-table-cell">
                                         <span class="fw-b">
                                             {{ object.updated_at|date:"M j, Y" }} . {{ object.updated_at|time:"h:i A" }}
                                         </span>
                                     </td>
                                     <td class="border-0">
                                         <a class="d-grid gap-2 text-decoration-none" href="{{ object.update_url }}">
-                                            <button type="button" class="btn btn-primary px-5">Edit</button>
+                                            <button type="button" class="btn btn-primary px-2 px-md-5">Edit</button>
                                         </a>
                                     </td>
                                 </tr>
