@@ -14,10 +14,12 @@
     <div class="row">
         <div class="flex-row align-items-center justify-content-between mb-4">
             <div class="text-end">
-                <button type="button" class="btn btn-dark col-sm-2 col-md-3 col-lg-2">
-                    <i class="bi bi-plus-lg me-md-2"></i>
-                    <span class="d-none d-md-inline text-nowrap">Create new</span>
-                </button>
+                <a href="{% url 'dashboard:create' %}" target="_blank">
+                    <button type="button" class="btn btn-dark col-sm-2 col-md-3 col-lg-2">
+                        <i class="bi bi-plus-lg me-md-2"></i>
+                        <span class="d-none d-md-inline text-nowrap">Create new</span>
+                    </button>
+                </a>
             </div>
         </div>
     </div>
