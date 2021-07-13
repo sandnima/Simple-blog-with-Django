@@ -49,6 +49,7 @@ def article_update_or_create_view(request, slug=None):
             instance.author = Profile.objects.get(user=request.user)
             instance.main_category = form.cleaned_data['main_category']
             instance.sub_category = form.cleaned_data['sub_category']
+            instance.save()
             instance.tags.set(form.cleaned_data['tags'])
             instance.save()
             form = ArticleUpdateCreateModelForm(instance=instance)
