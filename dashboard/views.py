@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.urls import resolve, reverse
 from django.db.models import Count
+from .decorators import user_in_group
 
 # import models
 from django.views.generic import (
@@ -22,7 +23,9 @@ from profiles.models import Profile
 # import forms
 from .forms import ArticleUpdateCreateModelForm
 
+
 @login_required
+# @user_in_group(group="")
 def dashboard(request):
     template_name = 'dashboard/dashboard.html'
     context = {
