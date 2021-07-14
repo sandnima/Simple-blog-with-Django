@@ -36,9 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Personal apps
-    'blog',
-    'dashboard',
-    'profiles',
+    'blog.apps.BlogConfig',
+    'dashboard.apps.DashboardConfig',
+    'profiles.apps.ProfilesConfig',
     # Third party apps
     'crispy_forms',
     'imagekit',
