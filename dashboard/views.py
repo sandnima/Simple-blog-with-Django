@@ -52,12 +52,13 @@ def article_list(request, page=1):
 @login_required
 def article_update_or_create_view(request, slug=None):
     template_name = 'dashboard/article_create_update.html'
-    article = get_object_or_404(Article, slug=slug) if slug else None
+    user_profile = Profile.objects.get(user=request.user)
+    article = get_object_or_404(Article, slug=slug, author=user_profile) if slug else None
     form = ArticleUpdateCreateModelForm(request.POST or None, request.FILES or None, instance=article)
     if request.method == "POST":
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.author = Profile.objects.get(user=request.user)
+            instance.author = user_profile
             instance.main_category = form.cleaned_data['main_category']
             instance.sub_category = form.cleaned_data['sub_category']
             instance.save()
