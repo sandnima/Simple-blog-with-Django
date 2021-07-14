@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.urls import resolve, reverse
+from django.utils.text import slugify
 from django.db.models import Count
 from .decorators import user_in_group
 
@@ -51,8 +52,6 @@ def article_list(request, page=1):
 @login_required
 def article_update_or_create_view(request, slug=None):
     template_name = 'dashboard/article_create_update.html'
-    if resolve(request.path).url_name:
-        pass
     article = get_object_or_404(Article, slug=slug) if slug else None
     form = ArticleUpdateCreateModelForm(request.POST or None, request.FILES or None, instance=article)
     if request.method == "POST":
@@ -61,9 +60,10 @@ def article_update_or_create_view(request, slug=None):
             instance.author = Profile.objects.get(user=request.user)
             instance.main_category = form.cleaned_data['main_category']
             instance.sub_category = form.cleaned_data['sub_category']
-            print(resolve(request.path).url_name)
             instance.save()
             instance.tags.set(form.cleaned_data['tags'])
+            if resolve(request.path).url_name == "create":
+                return redirect(reverse('dashboard:update', kwargs={'slug': instance.slug}))
             form = ArticleUpdateCreateModelForm(instance=instance)
         else:
             print(form.errors)
