@@ -5,7 +5,7 @@
 ## Feature
 ✳️ “Recent Posts”  
 ✳️ WYSIWYG Editor  
-🔜 Dashboard app for content writers
+✳ Dashboard app for content writers  
 🔜 Admin and User Management  
 🔜 Commenting System  
 🔜 Liking System  
