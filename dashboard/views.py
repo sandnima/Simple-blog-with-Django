@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.urls import resolve, reverse
-from django.utils.text import slugify
 from django.db.models import Count
 from .decorators import user_in_group
 
@@ -50,7 +50,7 @@ def article_list(request, page=1):
 
 
 @login_required
-def article_update_or_create_view(request, slug=None):
+def article_update_or_create(request, slug=None):
     template_name = 'dashboard/article_create_update.html'
     user_profile = Profile.objects.get(user=request.user)
     article = get_object_or_404(Article, slug=slug, author=user_profile) if slug else None
@@ -75,6 +75,19 @@ def article_update_or_create_view(request, slug=None):
         'main_category_options': MainCategory.objects.all(),
         'sub_category_options': SubCategory.objects.all(),
         'tag_options': Tag.objects.all(),
+    }
+    return render(request, template_name, context)
+
+
+@login_required
+def article_preview(request, slug):
+    template_name = 'dashboard/article_preview.html'
+    user_profile = Profile.objects.get(user=request.user)
+    article = get_object_or_404(Article, slug=slug)
+    if not (article.author == user_profile or request.user.groups.filter(name="ContentModerators").count() > 0):
+        raise Http404("Article not found")
+    context = {
+        'object': article,
     }
     return render(request, template_name, context)
 
