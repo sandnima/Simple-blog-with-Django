@@ -120,6 +120,8 @@ media/*/*.jpg
 media/*/*.jpeg
 media/*/*.png
 !/media/*/.gitkeep
+!/media/avatars/avatar.png
+!media/banners/placeholder-banner.png
 
 static/
 !static/.gitkeep

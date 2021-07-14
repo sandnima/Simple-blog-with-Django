@@ -17,6 +17,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         super(ArticleUpdateCreateModelForm, self).__init__(*args, **kwargs)
     
     image = forms.ImageField(
+        required=False,
         widget=forms.FileInput(
             attrs={
                 'class': 'form-control mb-3 d-none',
@@ -27,6 +28,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         )
     )
     main_category = forms.CharField(
+        required=False,
         max_length=60,
         widget=forms.TextInput(
             attrs={
@@ -38,8 +40,8 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         ),
     )
     sub_category = forms.CharField(
-        max_length=60,
         required=False,
+        max_length=60,
         widget=forms.TextInput(
             attrs={
                 'dir': 'auto',
@@ -50,8 +52,8 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         ),
     )
     tags = forms.CharField(
-        max_length=60,
         required=False,
+        max_length=60,
         widget=forms.TextInput(
             attrs={
                 'dir': 'auto',
@@ -78,13 +80,20 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             'headline': forms.Textarea(
                 attrs={
                     'dir': 'auto',
+                    'required': 'false',
                     'class': 'form-control',
                     'style': 'height: auto;',
                 },
             ),
         }
-    
+
+    def clean_headline(self):
+        if self.cleaned_data['headline'] is (None or ""):
+            return f"Short headline for Article{self.cleaned_data['title']}"
+        
     def clean_main_category(self):
+        if self.cleaned_data['main_category'] is None:
+            return None
         return MainCategory.objects.get_or_create(name=str(self.cleaned_data['main_category']).capitalize())[0]
     
     def clean_sub_category(self):

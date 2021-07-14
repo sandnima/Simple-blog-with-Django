@@ -7,7 +7,7 @@ from profiles.models import Profile
 
 from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFit
-from langdetect import detect
+from langdetect import detect, LangDetectException
 from ckeditor.fields import RichTextField
 # from ckeditor_uploader.fields import RichTextUploadingField # Uncomment for Ckeditor upload image option
 
@@ -105,19 +105,22 @@ class AbstractArticle(models.Model):
     slug = models.SlugField(unique=True, max_length=60, allow_unicode=True, blank=True)
     # meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
     main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
-                                      on_delete=models.PROTECT)
+                                      on_delete=models.PROTECT, blank=True)
     sub_category = models.ForeignKey(SubCategory,
                                      on_delete=models.PROTECT, blank=True, null=True)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
-    content = RichTextField()
+    content = RichTextField(blank=True, null=True)
     # content = RichTextUploadingField() # Uncomment for Ckeditor upload image option
-    headline = models.TextField(max_length=160)
+    headline = models.TextField(max_length=160, blank=True, null=True)
     lang = models.ForeignKey(Language, on_delete=models.SET(get_default_language), blank=True, null=True)
     image = ProcessedImageField(
         upload_to='banners',
         processors=[ResizeToFit(1024, 1024)],
         format='JPEG',
-        options={'quality': 90}
+        options={'quality': 90},
+        blank=True,
+        null=True,
+        default="banners/placeholder-banner.png"
     )
     medium_image = ImageSpecField(
         source='image',
@@ -153,7 +156,10 @@ class AbstractArticle(models.Model):
         if self.slug is (None or ""):
             self.slug = slugify(self.title, allow_unicode=True)
         if self.lang is None:
-            code = detect(self.content)
+            try:
+                code = detect(self.content)
+            except LangDetectException:
+                code = 'fa'
             self.lang = Language.objects.get_or_create(code=code)[0]
         return super().save(*args, **kwargs)
     
@@ -187,6 +193,17 @@ class Article(AbstractArticle):
     
 
 class ApprovedArticle(AbstractArticle):
+    content = RichTextField(blank=False, null=False)
+    image = ProcessedImageField(
+        upload_to='banners',
+        processors=[ResizeToFit(1024, 1024)],
+        format='JPEG',
+        options={'quality': 90},
+        blank=False,
+        null=False,
+        default="banners/banner.jpg"
+    )
+    headline = models.TextField(max_length=160, blank=False, null=False)
     meta = models.OneToOneField(ApprovedMeta, on_delete=models.PROTECT, blank=True, null=True)
     liked = models.ManyToManyField(User, blank=True)
     origin = models.OneToOneField(Article, on_delete=models.PROTECT)
