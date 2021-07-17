@@ -61,7 +61,6 @@ def article_update_or_create(request, slug=None):
             instance.author = user_profile
             instance.main_category = form.cleaned_data['main_category']
             instance.sub_category = form.cleaned_data['sub_category']
-            print(form.cleaned_data['headline'])
             instance.save()
             instance.tags.set(form.cleaned_data['tags'])
             return redirect(reverse('dashboard:update', kwargs={'slug': instance.slug}))
@@ -71,7 +70,6 @@ def article_update_or_create(request, slug=None):
         else:
             print(form.errors)
     
-    get_main_other_category()
     context = {
         'form': form,
         'main_category_options': MainCategory.objects.all(),

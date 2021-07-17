@@ -12,7 +12,7 @@ from ckeditor.fields import RichTextField
 # from ckeditor_uploader.fields import RichTextUploadingField # Uncomment for Ckeditor upload image option
 
 
-def get_guest_profile():
+def get_guest_profile(**kwargs):
     pass
 
 
@@ -23,7 +23,7 @@ class Tag(models.Model):
         return f'{self.tag_name}'
 
 
-def get_main_other_category():
+def get_main_other_category(**kwargs):
     return MainCategory.objects.get_or_create(name='Other')[0]
 
 
@@ -35,7 +35,7 @@ class MainCategory(models.Model):
         return f'{self.name}'
 
 
-def get_sub_other_category():
+def get_sub_other_category(**kwargs):
     return SubCategory.objects.get_or_create(name='Other')[0]
 
 

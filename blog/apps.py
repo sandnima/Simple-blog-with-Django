@@ -13,3 +13,5 @@ class BlogConfig(AppConfig):
     
     def ready(self):
         post_migrate.connect(create_groups, sender=self)
+        from .models import get_main_other_category
+        post_migrate.connect(get_main_other_category, sender=self)
