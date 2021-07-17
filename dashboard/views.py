@@ -61,11 +61,13 @@ def article_update_or_create(request, slug=None):
             instance.author = user_profile
             instance.main_category = form.cleaned_data['main_category']
             instance.sub_category = form.cleaned_data['sub_category']
+            print(form.cleaned_data['headline'])
             instance.save()
             instance.tags.set(form.cleaned_data['tags'])
-            if resolve(request.path).url_name == "create":
-                return redirect(reverse('dashboard:update', kwargs={'slug': instance.slug}))
-            form = ArticleUpdateCreateModelForm(instance=instance)
+            return redirect(reverse('dashboard:update', kwargs={'slug': instance.slug}))
+            # if resolve(request.path).url_name == "create":
+            #     return redirect(reverse('dashboard:update', kwargs={'slug': instance.slug}))
+            # form = ArticleUpdateCreateModelForm(instance=instance)
         else:
             print(form.errors)
     

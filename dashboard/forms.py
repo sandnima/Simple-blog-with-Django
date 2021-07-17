@@ -80,7 +80,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             'headline': forms.Textarea(
                 attrs={
                     'dir': 'auto',
-                    'required': 'false',
+                    'required': False,
                     'class': 'form-control',
                     'style': 'height: auto;',
                 },
@@ -88,7 +88,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         }
 
     def clean_headline(self):
-        if self.cleaned_data['headline'] is (None or ""):
+        if self.cleaned_data['headline'] is None or self.cleaned_data['headline'] == "":
             return f"Short headline for Article{self.cleaned_data['title']}"
         
     def clean_main_category(self):

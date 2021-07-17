@@ -1,6 +1,4 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.urls import reverse
 
 
 def user_in_group(function=None, group=None, redirect_field_name="", login_url="/404"):
