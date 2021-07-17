@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # Personal apps
     'blog.apps.BlogConfig',
     'dashboard.apps.DashboardConfig',
+    'moderate.apps.ModerateConfig',
     'profiles.apps.ProfilesConfig',
     # Third party apps
     'crispy_forms',

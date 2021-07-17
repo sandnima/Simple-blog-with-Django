@@ -14,6 +14,7 @@ urlpatterns = [
     path('about/', AboutView.as_view(), name='about'),
     path('blog/', include('blog.urls', namespace='blog')),
     path('dashboard/', include('dashboard.urls', namespace='dashboard')),
+    path('moderate/', include('moderate.urls', namespace='moderate')),
     path('profiles/', include('profiles.urls', namespace='profiles')),
 ]
 

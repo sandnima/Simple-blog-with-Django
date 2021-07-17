@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import user_passes_test
 
 
-def user_in_group(function=None, group=None, redirect_field_name="", login_url="/404"):
+def user_in_group(function=None, group=None, redirect_field_name="", login_url="/403"):
     def user_in_the_group(user):
         if user:
             return user.groups.filter(name=group).count() > 0

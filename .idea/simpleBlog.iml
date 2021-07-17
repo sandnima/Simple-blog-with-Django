@@ -33,6 +33,8 @@
         <option value="$MODULE_DIR$/templates/account" />
         <option value="$MODULE_DIR$/dashboard/templates/dashboard" />
         <option value="$MODULE_DIR$/dashboard/templates" />
+        <option value="$MODULE_DIR$/moderate/templates" />
+        <option value="$MODULE_DIR$/moderate/templates/moderate" />
       </list>
     </option>
   </component>
