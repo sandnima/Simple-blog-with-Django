@@ -16,8 +16,6 @@ from blog.models import (
     MainCategory,
     SubCategory,
     Tag,
-    get_main_other_category,
-    get_sub_other_category
 )
 from profiles.models import Profile
 
@@ -36,7 +34,7 @@ def dashboard(request):
 
 @login_required
 def article_list(request, page=1):
-    template_name = 'dashboard/article_list.html'
+    template_name = 'dashboard/blog/article_list.html'
     user_profile = Profile.objects.get(user=request.user)
     articles = Article.objects.all().filter(author=user_profile).order_by('-updated_at')
     paginate_by = 10
@@ -51,7 +49,7 @@ def article_list(request, page=1):
 
 @login_required
 def article_update_or_create(request, slug=None):
-    template_name = 'dashboard/article_create_update.html'
+    template_name = 'dashboard/blog/article_create_update.html'
     user_profile = Profile.objects.get(user=request.user)
     article = get_object_or_404(Article, slug=slug, author=user_profile) if slug else None
     form = ArticleUpdateCreateModelForm(request.POST or None, request.FILES or None, instance=article)
@@ -81,7 +79,7 @@ def article_update_or_create(request, slug=None):
 
 @login_required
 def article_preview(request, slug):
-    template_name = 'dashboard/article_preview.html'
+    template_name = 'dashboard/blog/article_preview.html'
     user_profile = Profile.objects.get(user=request.user)
     article = get_object_or_404(Article, slug=slug)
     if not (article.author == user_profile or request.user.groups.filter(name="ContentModerators").count() > 0):
@@ -94,7 +92,7 @@ def article_preview(request, slug):
 
 class ArticleDeleteView(DeleteView):
     model = Article
-    template_name = 'dashboard/delete.html'
+    template_name = 'dashboard/blog/article_delete.html'
     
     def get_success_url(self):
         return reverse('dashboard:index')
