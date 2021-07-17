@@ -1,10 +1,12 @@
 {% load custom_tags %}
+{% load moderate_tags %}
 
 {% url 'index' as path_to_home %}
 {% url 'admin:index' as path_to_admin %}
 {% url 'about' as path_to_about %}
 {% url 'blog:list-index' as path_to_blog_list %}
 {% url 'dashboard:index' as path_to_dashboard %}
+{% url 'moderate:index' as path_to_moderate %}
 {% url 'profiles:my-profile' as path_to_my_profile %}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -48,6 +50,9 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{{ path_to_dashboard }}"><i class="bi bi-bank2 me-2"></i>Dashboard</a></li>
+                            {% if user|user_in_the_group:"ContentModerators" %}
+                                <li><a class="dropdown-item" href="{{ path_to_moderate }}"><i class="bi bi-award me-2"></i>Moderate Content</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item disabled" href="#"><i class="bi bi-person-fill me-2"></i>Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-danger" href="{{ '/accounts/logout/' }}"><i class="bi bi-box-arrow-right me-2"></i>Log out</a></li>
