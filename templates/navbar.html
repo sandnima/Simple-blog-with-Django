@@ -1,9 +1,8 @@
-{% load custom_tags %}
-{% load moderate_tags %}
+{% load custom_filters %}
 
-{% url 'index' as path_to_home %}
+{% url 'home:index' as path_to_home %}
+{% url 'home:about' as path_to_about %}
 {% url 'admin:index' as path_to_admin %}
-{% url 'about' as path_to_about %}
 {% url 'blog:list-index' as path_to_blog_list %}
 {% url 'dashboard:index' as path_to_dashboard %}
 {% url 'moderate:index' as path_to_moderate %}

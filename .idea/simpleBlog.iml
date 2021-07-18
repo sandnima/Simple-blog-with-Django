@@ -36,6 +36,7 @@
         <option value="$MODULE_DIR$/moderate/templates" />
         <option value="$MODULE_DIR$/moderate/templates/moderate" />
         <option value="$MODULE_DIR$/home/templates" />
+        <option value="$MODULE_DIR$/home/templates/home" />
       </list>
     </option>
   </component>
