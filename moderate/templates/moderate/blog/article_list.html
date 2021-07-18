@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Article List{% endblock %}
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block content %}
+    <h4 class="col-4">Articles List</h4>
+    <div class="row">
+        <div class="flex-row align-items-center justify-content-between mb-4">
+            <div class="text-end">
+                <a href="{% url 'dashboard:create' %}" target="_blank">
+                    <button type="button" class="btn btn-dark col-sm-2 col-md-3 col-lg-2">
+                        <i class="bi bi-plus-lg me-md-2"></i>
+                        <span class="d-none d-md-inline text-nowrap">Create new</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-centered table align-middle table-nowrap mb-0 rounded" dir="auto">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="border-0 rounded-start"></th>
+                                <th class="border-0">Article</th>
+                                <th class="border-0 d-none d-lg-table-cell">
+                                    <span class="me-2">Likes</span><i class="bi bi-heart-fill text-danger"></i>
+                                </th>
+                                <th class="border-0">Status</th>
+                                <th class="border-0 d-none d-md-table-cell">Last Update</th>
+                                <th class="border-0 rounded-end">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for object in object_list %}
+                                <!-- Item -->
+                                <tr>
+                                    <td class="border-0">
+                                        <span class="fw-bold">{{ forloop.counter }}</span>
+                                    </td>
+                                    <td class="border-0">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div class="d-none d-md-block flex-shrink-0 overflow-hidden rounded-circle"
+                                                 style="height: 50px; width: 50px">
+                                                <img class="cover-image"
+                                                     alt="{{ object.title }}"
+                                                     src="{{ object.small_image.url }}">
+                                            </div>
+                                            <div class="ms-3">
+                                                <span class="h6 text-wrap">
+                                                    {{ object.title }}
+                                                </span>
+                                                <a href="{{ object.absolute_url }}" target="_blank">
+                                                    <i class="bi bi-box-arrow-up-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="border-0 d-none d-lg-table-cell">
+                                        <span>{{ object.like_count|default:"N/A" }}</span>
+                                    </td>
+                                    <td class="border-0">
+                                        <div class="d-flex text-{% if object.status == "DFT" %}secondary
+    {% elif object.status == "REQ" or object.status == "PND" %}warning
+    {% elif object.status == "PUB" %}success{% elif object.status == "EDT" %}info
+    {% elif object.status == "DEN" or object.status == "TRS" %}danger{% endif %}">
+                                            <span class="d-none d-md-inline">{{ object.get_status_display }}</span>
+                                            <i class="bi bi-circle-fill d-md-none mx-auto"></i>
+                                        </div>
+                                    </td>
+                                    <td class="border-0 d-none d-md-table-cell">
+                                        <span class="fw-b">
+                                            {{ object.updated_at|date:"M j, Y" }} . {{ object.updated_at|time:"h:i A" }}
+                                        </span>
+                                    </td>
+                                    <td class="border-0 d-grid gap-2 d-md-flex justify-content-md-center">
+{#                                        px-md-3 px-lg-5#}
+                                        <a class="btn btn-primary col-lg-6" href="{{ object.update_url }}"
+                                           target="_blank">
+                                            <i class="bi bi-pencil-square me-md-2"></i>
+                                            <span class="d-none d-md-inline text-nowrap">Edit</span>
+                                        </a>
+                                        <a class="btn btn-secondary col-lg-6" href="{{ object.preview_url }}"
+                                           target="_blank">
+                                            <i class="bi bi-eye me-md-2"></i>
+                                            <span class="d-none d-md-inline text-nowrap">Preview</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <!-- End of Item -->
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="border-0 pb-0" colspan="5">
+                                    <!-- Pagination nav -->
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination pagination-sm justify-content-start m-0">
+                                            <li class="page-item {% if not object_list.has_previous %}disabled{% endif %}">
+                                                {% if object_list.has_previous %}
+                                                    <a class="page-link" href="{% url 'dashboard:article_list' object_list.previous_page_number %}">Previous</a>
+                                                {% else %}
+                                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                                {% endif %}
+                                            </li>
+                                            <li class="page-item"><span class="page-link">{{ object_list.number }} of {{ total_pages }}</span></li>
+                                            <li class="page-item {% if not object_list.has_next %}disabled{% endif %}">
+                                                {% if object_list.has_next %}
+                                                    <a class="page-link" href="{% url 'dashboard:article_list' object_list.next_page_number %}">Next</a>
+                                                {% else %}
+                                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_body %}
+{% endblock extra_body %}
