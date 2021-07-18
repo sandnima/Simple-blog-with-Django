@@ -22,7 +22,7 @@ def moderate(request):
 def article_list(request, page=1):
     template_name = 'moderate/blog/article_list.html'
     # user_profile = Profile.objects.get(user=request.user)
-    articles = Article.objects.all().exclude(status='DRF').order_by('-updated_at')
+    articles = Article.objects.all().exclude(status='DFT').order_by('-updated_at')
     paginate_by = 10
     pages = Paginator(articles, paginate_by)
     queryset = pages.page(page)
