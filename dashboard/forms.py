@@ -93,10 +93,10 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         }
     
     def clean_headline(self):
-        if self.cleaned_data.get('headline') is None or self.cleaned_data.get('headline') == "":
-            return f"Short headline for Article: {self.cleaned_data.get('title')}"
-        else:
-            return self.cleaned_data.get('headline')
+        if self.cleaned_data.get('submit') == 'publish':
+            if self.cleaned_data.get('headline') is None or self.cleaned_data.get('headline') == "":
+                raise forms.ValidationError("Headline is required for publish.")
+        return self.cleaned_data.get('headline')
         
     def clean_main_category(self):
         if self.cleaned_data.get('main_category') is None:

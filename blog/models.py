@@ -189,7 +189,7 @@ class Article(AbstractArticle):
     meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
     
     def save(self, *args, **kwargs):
-        if self.meta is None:
+        if self.meta is None and self.headline != "":
             self.meta = get_or_create_meta(class_=Meta, title=self.title, description=self.headline)
         return super().save(*args, **kwargs)
     
