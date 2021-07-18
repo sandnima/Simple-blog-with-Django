@@ -89,7 +89,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
 
     def clean_headline(self):
         if self.cleaned_data['headline'] is None or self.cleaned_data['headline'] == "":
-            return f"Short headline for Article{self.cleaned_data['title']}"
+            return f"Short headline for Article: {self.cleaned_data['title']}"
         
     def clean_main_category(self):
         if self.cleaned_data['main_category'] is None:
