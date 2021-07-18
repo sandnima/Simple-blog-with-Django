@@ -77,12 +77,12 @@ class Status(models.Model):
     EDITED = 'EDT'
     PUBLISHED = 'PUB'
     DENIED = 'DEN'
-    TRASH = 'TRS'
+    TRASH = 'TSH'
     STATUS_CHOICES = [
         (DRAFT, 'پیشنویس'),
         (REQUESTED, 'آماده انتشار'),
         (PENDING, 'در دست برسی'),
-        (EDITED, 'برسی مجدد'),
+        (EDITED, 'تغییر یافته'),
         (PUBLISHED, 'منتشر شده'),
         (DENIED, 'رد شده'),
         (TRASH, 'زباله دان'),

@@ -55,19 +55,24 @@ def article_update_or_create(request, slug=None):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.author = user_profile
-            instance.main_category = form.cleaned_data['main_category']
-            instance.sub_category = form.cleaned_data['sub_category']
+            instance.main_category = form.cleaned_data.get('main_category')
+            instance.sub_category = form.cleaned_data.get('sub_category')
+            if not article:
+                instance.save()
+            if request.POST.get('submit') == 'publish':
+                if article.status in ['DFT', 'PUB', 'EDT']:
+                    instance.status = 'PND'
+            elif request.POST.get('submit') == 'save':
+                instance.status = 'DFT'
+            instance.tags.set(form.cleaned_data.get('tags'))
             instance.save()
-            instance.tags.set(form.cleaned_data['tags'])
             return redirect(reverse('dashboard:update', kwargs={'slug': instance.slug}))
-            # if resolve(request.path).url_name == "create":
-            #     return redirect(reverse('dashboard:update', kwargs={'slug': instance.slug}))
-            # form = ArticleUpdateCreateModelForm(instance=instance)
         else:
             print(form.errors)
     
     context = {
         'form': form,
+        'article': article if article else None,
         'main_category_options': MainCategory.objects.all(),
         'sub_category_options': SubCategory.objects.all(),
         'tag_options': Tag.objects.all(),

@@ -8,5 +8,5 @@ app_name = 'blog'
 urlpatterns = [
     path('', article_list, name='list-index'),
     path('p-<int:page>/', article_list, name='list'),
-    path('<slug:slug>/', ArticleDetailView.as_view(), name='detail'),
+    path('<unicode_slug:slug>/', ArticleDetailView.as_view(), name='detail'),
 ]

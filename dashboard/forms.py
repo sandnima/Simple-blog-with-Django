@@ -1,5 +1,5 @@
 from django import forms
-from blog.models import Article, MainCategory, SubCategory, Tag
+from blog.models import Article, MainCategory, SubCategory, Tag, Status
 from ckeditor.fields import RichTextFormField
 
 
@@ -15,7 +15,16 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 updated_initial['tags'] += "#" + str(tag).upper() + " "
             kwargs.update(initial=updated_initial)
         super(ArticleUpdateCreateModelForm, self).__init__(*args, **kwargs)
-    
+
+    # status = forms.ChoiceField(
+    #     required=True,
+    #     widget=forms.Select(
+    #         attrs={
+    #             'class': 'form-select mb-3',
+    #         },
+    #     ),
+    #     choices=Status.STATUS_CHOICES,
+    # )
     image = forms.ImageField(
         required=False,
         widget=forms.FileInput(
@@ -90,6 +99,8 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
     def clean_headline(self):
         if self.cleaned_data['headline'] is None or self.cleaned_data['headline'] == "":
             return f"Short headline for Article: {self.cleaned_data['title']}"
+        else:
+            return self.cleaned_data['headline']
         
     def clean_main_category(self):
         if self.cleaned_data['main_category'] is None:
