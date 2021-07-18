@@ -1,5 +1,5 @@
 from django import forms
-from blog.models import Article, MainCategory, SubCategory, Tag, Status
+from blog.models import Article, MainCategory, SubCategory, Tag, AbstractArticle
 from ckeditor.fields import RichTextFormField
 
 
@@ -15,16 +15,12 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 updated_initial['tags'] += "#" + str(tag).upper() + " "
             kwargs.update(initial=updated_initial)
         super(ArticleUpdateCreateModelForm, self).__init__(*args, **kwargs)
+        submit_field = {'submit': self.fields.pop('submit')}
+        self.fields = {**submit_field, **self.fields}
 
-    # status = forms.ChoiceField(
-    #     required=True,
-    #     widget=forms.Select(
-    #         attrs={
-    #             'class': 'form-select mb-3',
-    #         },
-    #     ),
-    #     choices=Status.STATUS_CHOICES,
-    # )
+    submit = forms.CharField(
+        required=True,
+    )
     image = forms.ImageField(
         required=False,
         widget=forms.FileInput(
@@ -95,30 +91,43 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 },
             ),
         }
-
+    
     def clean_headline(self):
-        if self.cleaned_data['headline'] is None or self.cleaned_data['headline'] == "":
-            return f"Short headline for Article: {self.cleaned_data['title']}"
+        if self.cleaned_data.get('headline') is None or self.cleaned_data.get('headline') == "":
+            return f"Short headline for Article: {self.cleaned_data.get('title')}"
         else:
-            return self.cleaned_data['headline']
+            return self.cleaned_data.get('headline')
         
     def clean_main_category(self):
-        if self.cleaned_data['main_category'] is None:
+        if self.cleaned_data.get('main_category') is None:
             return None
-        return MainCategory.objects.get_or_create(name=str(self.cleaned_data['main_category']).capitalize())[0]
+        return MainCategory.objects.get_or_create(name=str(self.cleaned_data.get('main_category')).capitalize())[0]
     
     def clean_sub_category(self):
-        if self.cleaned_data['sub_category']:
-            return SubCategory.objects.get_or_create(name=str(self.cleaned_data['sub_category']).capitalize(),
-                                                     parent=self.cleaned_data['main_category'])[0]
+        if self.cleaned_data.get('sub_category'):
+            return SubCategory.objects.get_or_create(name=str(self.cleaned_data.get('sub_category')).capitalize(),
+                                                     parent=self.cleaned_data.get('main_category'))[0]
         else:
             return None
     
     def clean_tags(self):
-        tags = self.cleaned_data['tags']
+        tags = self.cleaned_data.get('tags')
         tags_list = []
         for tag in tags.split():
             tag = tag.strip("#")
             if len(tag) > 0:
                 tags_list.append(Tag.objects.get_or_create(tag_name=tag.upper())[0])
         return tags_list
+    
+    def clean_content(self):
+        if self.cleaned_data.get('submit') == 'publish' and len(self.cleaned_data.get('content').split()) < 300:
+            raise forms.ValidationError("Content is too short. Consider at least 300 words.")
+        return self.cleaned_data.get('content')
+    
+    def clean_image(self):
+        if self.cleaned_data.get('submit') == 'publish':
+            if self.cleaned_data.get('image') is None:
+                raise forms.ValidationError("Consider a banner image.")
+            elif self.cleaned_data.get('image') == AbstractArticle.DEFAULT_BANNER:
+                raise forms.ValidationError("Change the default image before publish.")
+        return self.cleaned_data.get('content')

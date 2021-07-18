@@ -101,6 +101,8 @@ class AbstractMeta(models.Model):
 
 
 class AbstractArticle(models.Model):
+    DEFAULT_BANNER = 'banners/placeholder-banner.png'
+    
     title = models.CharField(unique=True, max_length=60)
     slug = models.SlugField(unique=True, max_length=60, allow_unicode=True, blank=True)
     # meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
@@ -120,7 +122,7 @@ class AbstractArticle(models.Model):
         options={'quality': 90},
         blank=True,
         null=True,
-        default="banners/placeholder-banner.png"
+        default=DEFAULT_BANNER
     )
     medium_image = ImageSpecField(
         source='image',
