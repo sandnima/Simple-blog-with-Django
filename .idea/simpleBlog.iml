@@ -25,16 +25,13 @@
       <list>
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/blog/templates" />
-        <option value="$MODULE_DIR$/blog/templates/blog" />
         <option value="$MODULE_DIR$/profiles/templates" />
         <option value="$MODULE_DIR$/profiles/templates/profiles" />
         <option value="$MODULE_DIR$/templates/socialaccount" />
         <option value="$MODULE_DIR$/templates/openid" />
         <option value="$MODULE_DIR$/templates/account" />
-        <option value="$MODULE_DIR$/dashboard/templates/dashboard" />
         <option value="$MODULE_DIR$/dashboard/templates" />
         <option value="$MODULE_DIR$/moderate/templates" />
-        <option value="$MODULE_DIR$/moderate/templates/moderate" />
         <option value="$MODULE_DIR$/home/templates" />
         <option value="$MODULE_DIR$/home/templates/home" />
       </list>

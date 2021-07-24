@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for object in object_list %}
+                            {% for article in article_list %}
                                 <!-- Item -->
                                 <tr>
                                     <td class="border-0">
@@ -52,43 +52,43 @@
                                             <div class="d-none d-md-block flex-shrink-0 overflow-hidden rounded-circle"
                                                  style="height: 50px; width: 50px">
                                                 <img class="cover-image"
-                                                     alt="{{ object.title }}"
-                                                     src="{{ object.small_image.url }}">
+                                                     alt="{{ article.title }}"
+                                                     src="{{ article.small_image.url }}">
                                             </div>
                                             <div class="ms-3">
                                                 <span class="h6 text-wrap">
-                                                    {{ object.title }}
+                                                    {{ article.title }}
                                                 </span>
-                                                <a href="{{ object.absolute_url }}" target="_blank">
+                                                <a href="{{ article.absolute_url }}" target="_blank">
                                                     <i class="bi bi-box-arrow-up-right"></i></a>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="border-0 d-none d-lg-table-cell">
-                                        <span>{{ object.like_count|default:"N/A" }}</span>
+                                        <span>{{ article.like_count|default:"N/A" }}</span>
                                     </td>
                                     <td class="border-0">
-                                        <div class="d-flex text-{% if object.status == "DFT" %}secondary
-    {% elif object.status == "REQ" or object.status == "PND" %}warning
-    {% elif object.status == "PUB" %}success{% elif object.status == "EDT" %}info
-    {% elif object.status == "DEN" or object.status == "TRS" %}danger{% endif %}">
-                                            <span class="d-none d-md-inline">{{ object.get_status_display }}</span>
+                                        <div class="d-flex text-{% if article.status == "DFT" %}secondary
+    {% elif article.status == "REQ" or article.status == "PND" %}warning
+    {% elif article.status == "PUB" %}success{% elif article.status == "EDT" %}info
+    {% elif article.status == "DEN" or article.status == "TRS" %}danger{% endif %}">
+                                            <span class="d-none d-md-inline">{{ article.get_status_display }}</span>
                                             <i class="bi bi-circle-fill d-md-none mx-auto"></i>
                                         </div>
                                     </td>
                                     <td class="border-0 d-none d-md-table-cell">
                                         <span class="fw-b">
-                                            {{ object.updated_at|date:"M j, Y" }} . {{ object.updated_at|time:"h:i A" }}
+                                            {{ article.updated_at|date:"M j, Y" }} . {{ article.updated_at|time:"h:i A" }}
                                         </span>
                                     </td>
                                     <td class="border-0 d-grid gap-2 d-md-flex justify-content-md-center">
 {#                                        px-md-3 px-lg-5#}
-                                        <a class="btn btn-primary col-lg-6" href="{{ object.update_url }}"
+                                        <a class="btn btn-primary col-lg-6" href="{{ article.update_url }}"
                                            target="_blank">
                                             <i class="bi bi-pencil-square me-md-2"></i>
                                             <span class="d-none d-md-inline text-nowrap">Edit</span>
                                         </a>
-                                        <a class="btn btn-secondary col-lg-6" href="{{ object.preview_url }}"
+                                        <a class="btn btn-secondary col-lg-6" href="{{ article.preview_url }}"
                                            target="_blank">
                                             <i class="bi bi-eye me-md-2"></i>
                                             <span class="d-none d-md-inline text-nowrap">Preview</span>
@@ -104,17 +104,17 @@
                                     <!-- Pagination nav -->
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination pagination-sm justify-content-start m-0">
-                                            <li class="page-item {% if not object_list.has_previous %}disabled{% endif %}">
-                                                {% if object_list.has_previous %}
-                                                    <a class="page-link" href="{% url 'dashboard:article_list' object_list.previous_page_number %}">Previous</a>
+                                            <li class="page-item {% if not article_list.has_previous %}disabled{% endif %}">
+                                                {% if article_list.has_previous %}
+                                                    <a class="page-link" href="{% url 'dashboard:article_list' article_list.previous_page_number %}">Previous</a>
                                                 {% else %}
                                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                                                 {% endif %}
                                             </li>
-                                            <li class="page-item"><span class="page-link">{{ object_list.number }} of {{ total_pages }}</span></li>
-                                            <li class="page-item {% if not object_list.has_next %}disabled{% endif %}">
-                                                {% if object_list.has_next %}
-                                                    <a class="page-link" href="{% url 'dashboard:article_list' object_list.next_page_number %}">Next</a>
+                                            <li class="page-item"><span class="page-link">{{ article_list.number }} of {{ total_pages }}</span></li>
+                                            <li class="page-item {% if not article_list.has_next %}disabled{% endif %}">
+                                                {% if article_list.has_next %}
+                                                    <a class="page-link" href="{% url 'dashboard:article_list' article_list.next_page_number %}">Next</a>
                                                 {% else %}
                                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
                                                 {% endif %}

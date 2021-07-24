@@ -39,7 +39,7 @@ def article_list(request, page=1):
     pages = Paginator(articles, paginate_by)
     queryset = pages.page(page)
     context = {
-        'object_list': queryset,
+        'article_list': queryset,
         'total_pages': pages.num_pages
     }
     return render(request, template_name, context)
@@ -88,7 +88,7 @@ def article_preview(request, slug):
     if not (article.author == user_profile or request.user.groups.filter(name="ContentModerators").count() > 0):
         raise Http404("Article not found")
     context = {
-        'object': article,
+        'article': article,
     }
     return render(request, template_name, context)
 

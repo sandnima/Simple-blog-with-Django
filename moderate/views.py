@@ -27,7 +27,7 @@ def article_list(request, page=1):
     pages = Paginator(articles, paginate_by)
     queryset = pages.page(page)
     context = {
-        'object_list': queryset,
+        'article_list': queryset,
         'total_pages': pages.num_pages
     }
     return render(request, template_name, context)
