@@ -1,5 +1,5 @@
 from django.db import models
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.utils.text import slugify
@@ -146,13 +146,13 @@ class AbstractArticle(models.Model):
         return f'{self.title}'
     
     def absolute_url(self):
-        return reverse("blog:detail", kwargs={"slug": self.slug})
+        return reverse_lazy("blog:detail", kwargs={"slug": self.slug})
     
     def update_url(self):
-        return reverse("dashboard:update", kwargs={"slug": self.slug})
+        return reverse_lazy("dashboard:article_update", kwargs={"slug": self.slug})
     
     def preview_url(self):
-        return reverse("dashboard:preview", kwargs={"slug": self.slug})
+        return reverse_lazy("dashboard:article_preview", kwargs={"slug": self.slug})
     
     def save(self, *args, **kwargs):
         if self.slug is (None or ""):
