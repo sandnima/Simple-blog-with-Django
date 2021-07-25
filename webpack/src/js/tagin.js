@@ -1,4 +1,4 @@
-function tagin(el, option = {}) {
+window.tagin = function (el, option = {}) {
   const classElement = 'tagin'
   const classWrapper = 'tagin-wrapper'
   const classTag = 'tagin-tag badge rounded-pill bg-light text-dark px-2'
