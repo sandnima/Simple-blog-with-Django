@@ -4,11 +4,12 @@
 {% block title %}Create{% endblock %}
 
 {% block scripts %}
+    <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
+{#    <script src="{% static 'js/ckeditor.js' %}"></script>#}
 {% endblock scripts %}
 
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/create-update.css' %}">
-    <link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">
     <link rel="stylesheet" href="{% static 'css/tagin.css' %}">
 {% endblock styles %}
 
@@ -89,16 +90,21 @@
 {% block extra_body %}
     <!-- start CKEDITOR -->
     <script>
-        let checkExist = setInterval(function () {
-            if ($('span.cke_top').length) {
-                import('{% static 'js/ckeditor-icons.js' %}')
-                if ($('iframe.cke_wysiwyg_frame').length) {
-                    $('iframe.cke_wysiwyg_frame').contents().find('html head')
-                        .append('<link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">');
-                }
-                clearInterval(checkExist);
-            }
-        }, 50); // check every 50ms
+        ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+                toolbar: {
+                    items: [
+                        'heading', '|',
+                        'bold', 'italic', 'link', 'undo', 'redo', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                        'alignment',
+                        'code', 'codeBlock', '|',
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
     <!-- end CKEDITOR -->
 

@@ -2,7 +2,7 @@ const path = require("path")
 module.exports = {
     entry: {
         "bootstrap": './src/js/bootstrap.js',
-        "ckeditor-icons": './src/js/ckeditor-icons.js',
+        "ckeditor": './src/js/ckeditor.js',
         "tagin": './src/js/tagin.js',
       },
     mode: 'development',

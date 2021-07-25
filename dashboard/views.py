@@ -65,6 +65,7 @@ class DashboardArticleCreateView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request):
+        print(request.POST)
         form = ArticleUpdateCreateModelForm(request.POST, request.FILES, instance=self.article)
 
         if form.is_valid():

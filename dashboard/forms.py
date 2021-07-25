@@ -1,6 +1,5 @@
 from django import forms
 from blog.models import Article, MainCategory, SubCategory, Tag, AbstractArticle
-from ckeditor.fields import RichTextFormField
 
 
 class ArticleUpdateCreateModelForm(forms.ModelForm):
@@ -81,7 +80,15 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                     'aria-label': 'Title',
                 },
             ),
-            'content': RichTextFormField(),
+            'content': forms.Textarea(
+                attrs={
+                    'dir': 'auto',
+                    'id': 'editor',
+                    'required': False,
+                    'class': 'form-control',
+                    'style': 'height: auto;',
+                },
+            ),
             'headline': forms.Textarea(
                 attrs={
                     'dir': 'auto',

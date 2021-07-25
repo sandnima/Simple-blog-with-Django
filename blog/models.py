@@ -8,8 +8,6 @@ from profiles.models import Profile
 from imagekit.models import ProcessedImageField, ImageSpecField
 from imagekit.processors import ResizeToFit
 from langdetect import detect, LangDetectException
-from ckeditor.fields import RichTextField
-# from ckeditor_uploader.fields import RichTextUploadingField # Uncomment for Ckeditor upload image option
 
 
 def get_guest_profile(**kwargs):
@@ -111,8 +109,7 @@ class AbstractArticle(models.Model):
     sub_category = models.ForeignKey(SubCategory,
                                      on_delete=models.PROTECT, blank=True, null=True)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
-    content = RichTextField(blank=True, null=True)
-    # content = RichTextUploadingField() # Uncomment for Ckeditor upload image option
+    content = models.TextField(blank=True, null=True)
     headline = models.TextField(max_length=160, blank=True, null=True)
     lang = models.ForeignKey(Language, on_delete=models.SET(get_default_language), blank=True, null=True)
     image = ProcessedImageField(
@@ -195,7 +192,7 @@ class Article(AbstractArticle):
     
 
 class ApprovedArticle(AbstractArticle):
-    content = RichTextField(blank=False, null=False)
+    content = models.TextField(blank=False, null=False)
     image = ProcessedImageField(
         upload_to='banners',
         processors=[ResizeToFit(1024, 1024)],
