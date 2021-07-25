@@ -132,3 +132,6 @@ secrets.json
 # Migrations
 */migrations
 !*/migrations/__init__.py
+
+# Webpack
+*/node_modules
