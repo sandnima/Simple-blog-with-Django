@@ -13,13 +13,25 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                include: path.resolve(__dirname, "node_modules/@ckeditor"),
+                use: [{
+                    loader: 'babel-loader',
+                }]
+            },
+            {
                 test: /\.(scss)$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
                 test: /\.(css)$/,
                 use: ['style-loader', 'css-loader']
-            }
+            },
+            {
+              test: /\.svg$/,
+              include: path.resolve(__dirname, "node_modules/@ckeditor"),
+              use: [ 'raw-loader' ]
+            },
         ]
     }
 };
