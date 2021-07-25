@@ -59,8 +59,10 @@
                                                 <span class="h6 text-wrap">
                                                     {{ article.title }}
                                                 </span>
-                                                <a href="{{ article.absolute_url }}" target="_blank">
-                                                    <i class="bi bi-box-arrow-up-right"></i></a>
+                                                {% if article.status == 'PUB' %}
+                                                    <a href="{{ article.absolute_url }}" target="_blank">
+                                                        <i class="bi bi-box-arrow-up-right"></i></a>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </td>
