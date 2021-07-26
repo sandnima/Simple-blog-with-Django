@@ -1,4 +1,6 @@
 from django import forms
+from django.utils.text import slugify
+
 from blog.models import Article, MainCategory, SubCategory, Tag, AbstractArticle
 from ckeditor.fields import RichTextFormField
 
@@ -91,6 +93,11 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 },
             ),
         }
+        
+    def title_headline(self):
+        if Article.objects.filter(slug=slugify(self.cleaned_data.get('headline'), allow_unicode=True)).exists():
+            raise forms.ValidationError("Slug already exists.")
+        return self.cleaned_data.get('title')
     
     def clean_headline(self):
         if self.cleaned_data.get('submit') == 'publish':

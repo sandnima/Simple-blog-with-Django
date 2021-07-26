@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.http import Http404
+from django.utils.text import slugify
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -69,6 +70,7 @@ class DashboardArticleCreateView(LoginRequiredMixin, View):
 
         if form.is_valid():
             instance = form.save(commit=False)
+            instance.slug = slugify(form.cleaned_data.get('title'), allow_unicode=True)
             instance.author = Profile.objects.get(user=request.user)
             instance.main_category = form.cleaned_data.get('main_category')
             instance.sub_category = form.cleaned_data.get('sub_category')

@@ -31,7 +31,7 @@
             </div>
             <div class="col-4">
                 <div class="d-flex flex-row flex-wrap justify-content-between">
-                    <div class="col-12 mb-3">Status: {{ article.get_status_display }}</div>
+                    <div class="col-12 mb-3">Article status: {{ article.get_status_display }}</div>
                     {% if article is None or article.status == 'DFT' %}
                         <div class="d-flex flex-row col-12">
                             <button type="submit" name="submit"
