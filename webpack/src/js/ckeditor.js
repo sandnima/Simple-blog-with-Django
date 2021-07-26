@@ -1,11 +1,11 @@
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '../../ckeditor5-build-modern-blog/build/ckeditor';
 
 ClassicEditor
     .create( document.querySelector( '#editor' ), {
         toolbar: {
             items: [
                 'heading', '|',
-                'bold', 'italic', 'link', 'undo', 'redo', 'bulletedList', 'numberedList', 'blockQuote',
+                'bold', 'italic', 'link', 'undo', 'redo', 'alignment', 'bulletedList', 'numberedList', 'blockQuote',
             ],
             shouldNotGroupWhenFull: true
         },
