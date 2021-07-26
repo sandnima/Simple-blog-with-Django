@@ -4,11 +4,11 @@
 {% block title %}Create{% endblock %}
 
 {% block scripts %}
+{#    <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>#}
 {% endblock scripts %}
 
 {% block styles %}
     <link rel="stylesheet" href="{% static 'css/create-update.css' %}">
-    <link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">
     <link rel="stylesheet" href="{% static 'css/tagin.css' %}">
 {% endblock styles %}
 
@@ -28,6 +28,10 @@
                 {{ form.image }}
                 {{ form.media }}
                 {{ form.content }}
+                <div id="word-count" class="d-flex flex-row col-12 justify-content-between bg-light border border-top-0">
+                    <span class="small ms-2">Status:</span>
+                    <span class="words small me-2"></span>
+                </div>
             </div>
             <div class="col-4">
                 <div class="d-flex flex-row flex-wrap justify-content-between">
@@ -88,18 +92,7 @@
 
 {% block extra_body %}
     <!-- start CKEDITOR -->
-    <script>
-        let checkExist = setInterval(function () {
-            if ($('span.cke_top').length) {
-                import('{% static 'js/ckeditor-icons.js' %}')
-                if ($('iframe.cke_wysiwyg_frame').length) {
-                    $('iframe.cke_wysiwyg_frame').contents().find('html head')
-                        .append('<link rel="stylesheet" href="{% static 'css/ckeditor.css' %}">');
-                }
-                clearInterval(checkExist);
-            }
-        }, 50); // check every 50ms
-    </script>
+    <script src="{% static 'js/ckeditor.js' %}"></script>
     <!-- end CKEDITOR -->
 
     <!-- start DROPDOWN -->

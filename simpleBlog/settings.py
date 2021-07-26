@@ -46,60 +46,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'imagekit',
     'langdetect',
-    'ckeditor',  # 'ckeditor_uploader', # Uncomment for Ckeditor upload image option
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount'
 ]
-
-# Ckeditor configuration
-CKEDITOR_UPLOAD_PATH = 'contents/'
-CKEDITOR_ALLOW_NONIMAGE_FILES = False
-CKEDITOR_CONFIGS = {
-    'default': {
-        'skin': 'moono-lisa',
-        'toolbar_myToolbar': [
-            {'name': 'styles', 'items': ['Styles', 'Format', 'FontSize']},
-            {'name': 'clipboard', 'items': ['Undo', 'Redo']},
-            {'name': 'document',
-             'items': ['Source', 'Templates']},
-            '/',
-            {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat']},
-            {'name': 'paragraph',
-             'items': ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', 'BidiLtr', 'BidiRtl', 'Language'
-                       '-', 'NumberedList', 'BulletedList', 'Blockquote', 'Outdent', 'Indent']},
-            {'name': 'links', 'items': ['Link', 'Unlink']},
-            '/',
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-            {'name': 'insert',
-             'items': ['Image', 'Table', 'HorizontalRule', 'PageBreak', 'Iframe']},
-            {'name': 'tools', 'items': ['ShowBlocks', 'Maximize']},
-        ],
-        'toolbar': 'myToolbar',
-        'toolbarCanCollapse': True,
-        'tabSpaces': 4,
-        'width': '100%',
-        'extraPlugins': ','.join([
-            'wordcount',
-            'autolink',
-            'autoembed',
-            'embedsemantic',
-            'autogrow',
-            # 'devtools',
-            'widget',
-            'lineutils',
-            'clipboard',
-            'dialog',
-            'dialogui',
-            'elementspath',
-            'bidi'
-        ]),
-        'contentsLangDirection': 'rtl',
-        'removePlugins': 'exportpdf',
-    }
-}
 
 # Allauth configuration
 SITE_ID = 1
