@@ -137,4 +137,4 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 raise forms.ValidationError("Consider a banner image.")
             elif self.cleaned_data.get('image') == AbstractArticle.DEFAULT_BANNER:
                 raise forms.ValidationError("Change the default image before publish.")
-        return self.cleaned_data.get('content')
+        return self.cleaned_data.get('image')
