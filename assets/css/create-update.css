@@ -28,3 +28,7 @@
 .img-update:hover span {
     opacity: 1;
 }
+
+.ck.ck-content {
+    min-height: 20em;
+}
