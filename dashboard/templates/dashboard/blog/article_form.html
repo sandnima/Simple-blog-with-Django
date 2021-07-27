@@ -35,7 +35,7 @@
             </div>
             <div class="col-4">
                 <div class="d-flex flex-row flex-wrap justify-content-between">
-                    <div class="col-12 mb-3">Article status: {{ article.get_status_display }}</div>
+                    <div class="col-12 mb-3"><span class="form-label fs-5">Article status: </span>{{ article.get_status_display }}</div>
                     {% if article is None or article.status == 'DFT' %}
                         <div class="d-flex flex-row col-12">
                             <button type="submit" name="submit"
@@ -83,11 +83,24 @@
                         <option value="{{ tag }} "></option>
                     {% endfor %}
                 </datalist>
+
+                <div class="accordion-button rounded bg-transparent text-reset border-0 shadow-none p-0 pb-3
+                d-inline-flex col-12"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#advanced" aria-expanded="true" aria-controls="advanced">
+                    <span class="me-auto user-select-none">Advanced section</span>
+                </div >
+                <div class="accordion-collapse collapse show" id="advanced">
+                    <label for="{{ form.meta_title.id_for_label }}" class="form-label">{{ form.meta_title.label }}</label>
+                    {{ form.meta_title }}
+                    <label for="{{ form.meta_description.id_for_label }}" class="form-label">{{ form.meta_description.label }}</label>
+                    {{ form.meta_description }}
+                </div>
             </div>
         </div>
     </form>
 
-    {{ form.image.value_from_datadict.name }}
+{#    {{ form.image.value_from_datadict.name }}#}
 {% endblock %}
 
 {% block extra_body %}

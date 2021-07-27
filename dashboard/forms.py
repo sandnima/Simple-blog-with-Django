@@ -69,6 +69,29 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             },
         ),
     )
+    meta_title = forms.CharField(
+        required=False,
+        max_length=60,
+        widget=forms.TextInput(
+            attrs={
+                'dir': 'auto',
+                'class': 'form-control mb-2',
+                'placeholder': 'Meta title tag',
+            },
+        ),
+    )
+    meta_description = forms.CharField(
+        required=False,
+        max_length=160,
+        widget=forms.Textarea(
+            attrs={
+                'dir': 'auto',
+                'rows': 5,
+                'class': 'form-control mb-2',
+                'placeholder': 'Meta description tag',
+            },
+        ),
+    )
     
     class Meta:
         model = Article
