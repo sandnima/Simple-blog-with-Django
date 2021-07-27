@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Article List{% endblock %}
+{% block title %}
+    {% if article.meta.title_tag %} {{ article.meta.title_tag }}
+    {% else %} {{ article.title }}
+    {% endif %}
+{% endblock %}
 
 {% block scripts %}
 {% endblock scripts %}

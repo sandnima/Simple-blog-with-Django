@@ -46,8 +46,8 @@
                 </div>
 
                 <div class="d-flex flex-row flex-wrap justify-content-between">
-                    <div class="d-flex align-content-end col-12 mb-2 pt-2">
-                        <span class="form-label fs-5 me-1">Article status: </span>
+                    <div class="d-flex align-content-baseline col-12 mb-3 mt-2">
+                        <span class="fs-5 me-1">Article status: </span>
                         <span>{{ article.get_status_display }}</span>
                     </div>
                     {% if article is None or article.status == 'DFT' %}
