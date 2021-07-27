@@ -74,6 +74,8 @@ class DashboardArticleCreateView(LoginRequiredMixin, View):
             instance.author = Profile.objects.get(user=request.user)
             instance.main_category = form.cleaned_data.get('main_category')
             instance.sub_category = form.cleaned_data.get('sub_category')
+            instance.meta_title = form.cleaned_data.get('meta_title')
+            instance.meta_description = form.cleaned_data.get('meta_description')
             instance.save()
             if not self.article:
                 instance.save()

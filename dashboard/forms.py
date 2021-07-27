@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.text import slugify
 
-from blog.models import Article, MainCategory, SubCategory, Tag, AbstractArticle
+from blog.models import Article, ApprovedArticle, MainCategory, SubCategory, Tag, AbstractArticle
 
 
 class ArticleUpdateCreateModelForm(forms.ModelForm):
@@ -9,6 +9,8 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
         if kwargs['instance']:
             instance = kwargs['instance']
             updated_initial = dict()
+            updated_initial['meta_title'] = instance.meta_title
+            updated_initial['meta_description'] = instance.meta_description
             updated_initial['main_category'] = instance.main_category
             updated_initial['sub_category'] = instance.sub_category
             updated_initial['tags'] = ""
@@ -155,6 +157,24 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             if len(tag) > 0:
                 tags_list.append(Tag.objects.get_or_create(tag_name=tag.upper())[0])
         return tags_list
+    
+    def clean_meta_title(self):
+        if self.cleaned_data.get('meta_title'):
+            if Article.objects.filter(meta_title=self.cleaned_data.get('meta_title')).exists() or \
+                    ApprovedArticle.objects.filter(meta_title=self.cleaned_data.get('meta_title')).exists():
+                raise forms.ValidationError("Meta title already exists.")
+            return self.cleaned_data.get('meta_title')
+        else:
+            return None
+    
+    def clean_meta_description(self):
+        if self.cleaned_data.get('meta_description'):
+            if Article.objects.filter(meta_description=self.cleaned_data.get('meta_description')).exists() or \
+                    ApprovedArticle.objects.filter(meta_description=self.cleaned_data.get('meta_description')).exists():
+                raise forms.ValidationError("Meta description already exists.")
+            return self.cleaned_data.get('meta_description')
+        else:
+            return None
     
     def clean_content(self):
         if self.cleaned_data.get('submit') == 'publish' and len(self.cleaned_data.get('content').split()) < 300:

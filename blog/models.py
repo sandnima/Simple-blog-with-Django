@@ -85,33 +85,22 @@ class Status(models.Model):
         (DENIED, 'رد شده'),
         (TRASH, 'زباله دان'),
     ]
-
-
-class AbstractMeta(models.Model):
-    title_tag = models.CharField(unique=True, max_length=60)
-    description_tag = models.TextField(unique=True, max_length=160)
     
-    def __str__(self):
-        return f'{self.title_tag}'
-    
-    class Meta:
-        abstract = True
-
 
 class AbstractArticle(models.Model):
     DEFAULT_BANNER = 'banners/placeholder-banner.png'
     
     title = models.CharField(unique=True, max_length=60)
     slug = models.SlugField(unique=True, max_length=60, allow_unicode=True, blank=True)
-    # meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
+    author = models.ForeignKey(Profile, on_delete=models.PROTECT)
+    content = models.TextField(blank=True, null=True)
+    headline = models.TextField(max_length=160, blank=True, null=True)
+    meta_title = models.CharField(unique=True, blank=True, max_length=60)
+    meta_description = models.TextField(unique=True, blank=True, max_length=160)
     main_category = models.ForeignKey(MainCategory, default=get_main_other_category,
                                       on_delete=models.PROTECT, blank=True)
     sub_category = models.ForeignKey(SubCategory,
                                      on_delete=models.PROTECT, blank=True, null=True)
-    author = models.ForeignKey(Profile, on_delete=models.PROTECT)
-    content = models.TextField(blank=True, null=True)
-    headline = models.TextField(max_length=160, blank=True, null=True)
-    lang = models.ForeignKey(Language, on_delete=models.SET(get_default_language), blank=True, null=True)
     image = ProcessedImageField(
         upload_to='banners',
         processors=[ResizeToFit(1024, 1024)],
@@ -133,6 +122,7 @@ class AbstractArticle(models.Model):
         format='JPEG',
         options={'quality': 95}
     )
+    lang = models.ForeignKey(Language, on_delete=models.SET(get_default_language), blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     status = models.CharField(max_length=Status.max_length, choices=Status.STATUS_CHOICES,
                               default=Status.DRAFT)
@@ -154,6 +144,10 @@ class AbstractArticle(models.Model):
     def save(self, *args, **kwargs):
         if self.slug is (None or ""):
             self.slug = slugify(self.title, allow_unicode=True)
+        if self.meta_title is None or self.meta_title == "":
+            self.meta_title = self.title
+        if self.meta_description is None or self.meta_description == "":
+            self.meta_description = self.meta_title
         if self.lang is None:
             try:
                 code = detect(self.content)
@@ -170,25 +164,8 @@ def get_or_create_meta(class_, title, description):
     return class_.objects.get_or_create(title_tag=title, description_tag=description)[0]
 
 
-class Meta(AbstractMeta):
-    pass
-
-
-class ApprovedMeta(AbstractMeta):
-    def approve_meta(self, obj):
-        self.title_tag = obj.title_tag
-        self.description_tag = obj.description_tag
-        self.save()
-        return self
-
-
 class Article(AbstractArticle):
-    meta = models.OneToOneField(Meta, on_delete=models.PROTECT, blank=True, null=True)
-    
-    def save(self, *args, **kwargs):
-        if self.meta is None and self.headline != "":
-            self.meta = get_or_create_meta(class_=Meta, title=self.title, description=self.headline)
-        return super().save(*args, **kwargs)
+    pass
     
 
 class ApprovedArticle(AbstractArticle):
@@ -203,7 +180,7 @@ class ApprovedArticle(AbstractArticle):
         default="banners/banner.jpg"
     )
     headline = models.TextField(max_length=160, blank=False, null=False)
-    meta = models.OneToOneField(ApprovedMeta, on_delete=models.PROTECT, blank=True, null=True)
+    meta_description = models.TextField(unique=True, max_length=160)
     liked = models.ManyToManyField(User, blank=True)
     origin = models.OneToOneField(Article, on_delete=models.PROTECT)
     approver = models.ForeignKey(Profile, on_delete=models.PROTECT, related_name='approver')

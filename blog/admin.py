@@ -4,8 +4,6 @@ from .models import (
     SubCategory,
     Language,
     Tag,
-    Meta,
-    ApprovedMeta,
     Article,
     ApprovedArticle,
 )
@@ -23,8 +21,6 @@ class MetaAdmin(admin.ModelAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(ApprovedArticle, ArticleAdmin)
-admin.site.register(Meta, MetaAdmin)
-admin.site.register(ApprovedMeta, MetaAdmin)
 admin.site.register(MainCategory)
 admin.site.register(SubCategory)
 admin.site.register(Language)
