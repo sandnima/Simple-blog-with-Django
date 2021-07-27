@@ -1,0 +1,5 @@
+# TODO
+    1- Creating Advanced section with Meta tags input
+    2- Responsive form for mobile
+    3- Form validations
+    4- Approve Article page for content managers
