@@ -76,7 +76,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
             attrs={
                 'dir': 'auto',
                 'class': 'form-control mb-2',
-                'placeholder': 'Meta title tag',
+                'placeholder': 'Meta Title tag',
             },
         ),
     )
@@ -88,7 +88,7 @@ class ArticleUpdateCreateModelForm(forms.ModelForm):
                 'dir': 'auto',
                 'rows': 5,
                 'class': 'form-control mb-2',
-                'placeholder': 'Meta description tag',
+                'placeholder': 'Meta Description tag',
             },
         ),
     )
