@@ -185,11 +185,6 @@ class ApprovedArticle(AbstractArticle):
     origin = models.OneToOneField(Article, on_delete=models.PROTECT)
     approver = models.ForeignKey(Profile, on_delete=models.PROTECT, related_name='approver')
     
-    def save(self, *args, **kwargs):
-        if self.meta is None:
-            self.meta = get_or_create_meta(class_=ApprovedMeta, title=self.title, description=self.headline)
-        return super().save(*args, **kwargs)
-    
     def approve_article(self):
         self.title = self.origin.title
         self.slug = self.origin.slug
